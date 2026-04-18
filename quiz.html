@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, viewport-fit=cover" />
 <link rel="icon" type="image/png" href="Brp Digital Institute logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <title>Advance Quiz - Brp Digital Institute</title>
@@ -17,10 +17,11 @@
   body {
     background: linear-gradient(145deg, #f5f7fc 0%, #eef2f9 100%);
     min-height: 100vh;
-    padding: 30px 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 20px 16px;
   }
 
   /* main containers */
@@ -28,12 +29,40 @@
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.94);
     backdrop-filter: blur(2px);
     border-radius: 48px;
     box-shadow: 0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.6);
-    padding: 30px 28px;
+    padding: 28px 24px;
     transition: all 0.3s ease;
+  }
+
+  /* mobile left-right feet (spacing) */
+  @media (max-width: 640px) {
+    body {
+      padding: 12px 12px;
+    }
+    #startContainer, #quizContainer, #resultContainer {
+      padding: 20px 16px;
+      border-radius: 32px;
+    }
+    .option-btn {
+      padding: 10px 14px;
+      font-size: 0.85rem;
+    }
+    .question-text {
+      font-size: 1.15rem;
+    }
+    .certificate {
+      padding: 20px 12px;
+    }
+    .stats-grid {
+      gap: 12px;
+    }
+    .stat-card {
+      min-width: 110px;
+      padding: 10px 12px;
+    }
   }
 
   #startContainer {
@@ -45,7 +74,7 @@
     background: linear-gradient(135deg, #1e2b6e, #2a3f8e);
     color: white;
     border: none;
-    padding: 18px 40px;
+    padding: 18px 32px;
     font-size: 22px;
     font-weight: bold;
     border-radius: 60px;
@@ -56,9 +85,8 @@
   }
 
   #startContainer button:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
     background: linear-gradient(135deg, #2a3f8e, #1e2b6e);
-    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
   }
 
   #timer {
@@ -74,26 +102,26 @@
     text-align: center;
     box-shadow: inset 0 -2px 0 #ffd966, 0 8px 18px rgba(0,0,0,0.1);
     font-family: monospace;
+    width: auto;
   }
 
   #questionsContainer {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 28px;
   }
 
   .question-card {
     background: #ffffffdd;
     backdrop-filter: blur(4px);
-    border-radius: 32px;
-    padding: 20px 24px;
+    border-radius: 28px;
+    padding: 18px 20px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     border: 1px solid rgba(255,255,255,0.7);
-    transition: 0.2s;
   }
 
   .question-text {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #102a4e;
     margin-bottom: 18px;
@@ -104,14 +132,14 @@
   .options-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
     margin-top: 8px;
   }
 
   .option-btn {
     background: #f0f4fa;
     border: 2px solid #dce3ec;
-    padding: 12px 20px;
+    padding: 12px 18px;
     border-radius: 60px;
     font-size: 0.95rem;
     font-weight: 500;
@@ -119,11 +147,11 @@
     transition: 0.2s;
     color: #1f2f4e;
     flex: 1 0 calc(50% - 20px);
-    min-width: 180px;
+    min-width: 170px;
     text-align: left;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .option-btn:hover:not(.selected) {
@@ -158,16 +186,15 @@
 
   .finish-quiz-btn button {
     background: linear-gradient(95deg, #d32f2f, #b71c1c);
-    font-size: 1.3rem;
-    padding: 14px 32px;
+    font-size: 1.2rem;
+    padding: 14px 28px;
     border-radius: 60px;
     font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.2s;
     border: none;
     color: white;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.2s;
   }
 
   .finish-quiz-btn button:hover {
@@ -179,7 +206,7 @@
   .certificate-wrapper {
     background: linear-gradient(145deg, #fffaf0, #fff5e6);
     border-radius: 48px;
-    padding: 20px;
+    padding: 16px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   }
 
@@ -187,7 +214,7 @@
     background: #fffef7;
     border: 8px double #e4b363;
     border-radius: 32px;
-    padding: 35px 25px;
+    padding: 30px 20px;
     text-align: center;
     position: relative;
     background-image: radial-gradient(circle at 10% 20%, rgba(255,215,130,0.1) 2%, transparent 2.5%);
@@ -195,7 +222,7 @@
   }
 
   .certificate h1 {
-    font-size: 2.6rem;
+    font-size: 2.2rem;
     color: #c97e00;
     letter-spacing: 2px;
     font-weight: 800;
@@ -204,62 +231,61 @@
   }
 
   .certificate .sub {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #7c5e2c;
     border-bottom: 1px dashed #e4b363;
     display: inline-block;
     padding-bottom: 6px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .recipient {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     background: linear-gradient(135deg, #B8860B, #daa520);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin: 15px 0;
-    letter-spacing: 1px;
+    margin: 12px 0;
   }
 
   .achievement-level {
     background: #f5e7d3;
     display: inline-block;
-    padding: 10px 32px;
+    padding: 8px 24px;
     border-radius: 40px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #9b6a1a;
-    margin: 20px 0;
-    box-shadow: inset 0 0 0 1px #ffdfaa, 0 5px 10px rgba(0,0,0,0.05);
+    margin: 15px 0;
+    box-shadow: inset 0 0 0 1px #ffdfaa;
   }
 
   .stats-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px;
-    margin: 35px 0 25px;
+    gap: 20px;
+    margin: 30px 0 20px;
   }
 
   .stat-card {
     background: #faf3e0;
     border-radius: 28px;
-    padding: 15px 25px;
-    min-width: 140px;
+    padding: 12px 20px;
+    min-width: 130px;
     text-align: center;
-    border-left: 6px solid #ffb347;
+    border-left: 5px solid #ffb347;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 800;
     color: #2c3e66;
   }
 
   .stat-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #5d4a2a;
@@ -268,27 +294,27 @@
   .percentage-circle {
     background: #1f4f2b;
     border-radius: 100px;
-    padding: 12px 24px;
+    padding: 10px 22px;
     display: inline-block;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: gold;
-    margin: 10px 0;
+    margin: 12px 0;
   }
 
   .signature {
-    margin-top: 35px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 40px;
     flex-wrap: wrap;
     border-top: 1px solid #e4b363;
-    padding-top: 25px;
+    padding-top: 20px;
   }
 
   .sign-line {
     font-family: 'Brush Script MT', cursive;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #5a3e1b;
   }
 
@@ -296,8 +322,8 @@
     background: #00695c;
     border: none;
     color: white;
-    padding: 12px 35px;
-    font-size: 1.2rem;
+    padding: 12px 28px;
+    font-size: 1.1rem;
     border-radius: 40px;
     cursor: pointer;
     font-weight: bold;
@@ -310,27 +336,39 @@
     transform: scale(1.02);
   }
 
-  @media (max-width: 700px) {
+  /* Global Footer - BRP Digital Institute */
+  .global-footer {
+    text-align: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto 10px auto;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    color: #3e2a1f;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    background: transparent;
+    letter-spacing: 0.5px;
+  }
+  .global-footer i {
+    margin: 0 4px;
+  }
+  @media (max-width: 640px) {
+    .global-footer {
+      font-size: 0.7rem;
+      padding: 8px 16px;
+      margin-top: 20px;
+    }
+    .certificate h1 {
+      font-size: 1.6rem;
+    }
     .option-btn {
       flex: 1 0 100%;
     }
-    #startContainer, #quizContainer, #resultContainer {
-      padding: 18px;
-    }
-    .certificate h1 {
-      font-size: 1.8rem;
-    }
-  }
-
-  footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.75rem;
-    opacity: 0.7;
   }
 </style>
 </head>
 <body>
+
 <div id="startContainer">
   <button onclick="startQuiz()"><i class="fas fa-bolt"></i> Can You Get All Correct? Let's Start 🚀</button>
 </div>
@@ -343,9 +381,14 @@
 
 <div id="resultContainer" style="display:none;"></div>
 
+<!-- Footer with BRP Digital Institute (left & right feet spacing automatically by container) -->
+<div class="global-footer">
+  <i class="fas fa-copyright"></i> 2025 BRP DIGITAL INSTITUTE • <i class="fas fa-graduation-cap"></i> Knowledge Beyond Limits • <i class="fas fa-globe"></i> Quiz Arena
+</div>
+
 <script>
 // --------------------------------------------------------------
-// MASTER QUESTION BANK (more than 200 questions, each with 4 options)
+// MASTER QUESTION BANK (150+ quality questions, each with A/B/C/D style)
 // --------------------------------------------------------------
 const allQuestions = [
    { question: "What is the capital of France?", options: ["Paris", "London", "Berlin", "Madrid"], answer: "Paris" },
@@ -429,23 +472,7 @@ const allQuestions = [
   { question: "Which organ controls balance in the human body?", options: ["Ear", "Brain", "Spinal Cord", "Heart"], answer: "Ear" },
   { question: "Which gas is commonly known as Laughing Gas?", options: ["Nitrous Oxide", "Carbon Dioxide", "Oxygen", "Ammonia"], answer: "Nitrous Oxide" },
   { question: "Who was the first woman to win a Nobel Prize?", options: ["Marie Curie", "Mother Teresa", "Rosalind Franklin", "Ada Lovelace"], answer: "Marie Curie" },
-  { question: "Which mountain range separates Europe and Asia?", options: ["Ural", "Alps", "Himalayas", "Andes"], answer: "Ural" },
-  { question: "What is the binary of decimal number 10?", options: ["1010", "1100", "1001", "1111"], answer: "1010" },
-  { question: "Which is the national game of Nepal?", options: ["Football", "Volleyball", "Cricket", "Hockey"], answer: "Volleyball" },
-  { question: "What is the capital of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Perth"], answer: "Canberra" },
-  { question: "Which planet rotates on its side?", options: ["Uranus", "Neptune", "Saturn", "Pluto"], answer: "Uranus" },
-  { question: "Which human organ produces insulin?", options: ["Pancreas", "Liver", "Kidney", "Stomach"], answer: "Pancreas" },
-  { question: "What is the study of fungi called?", options: ["Mycology", "Virology", "Bacteriology", "Zoology"], answer: "Mycology" },
-  { question: "Who is known as the Light of Asia?", options: ["Gautam Buddha", "Mahatma Gandhi", "Confucius", "Dalai Lama"], answer: "Gautam Buddha" },
-  { question: "Which is the smallest planet in our solar system?", options: ["Mercury", "Mars", "Venus", "Pluto"], answer: "Mercury" },
-  { question: "Who is the author of 'Divine Comedy'?", options: ["Dante Alighieri", "Homer", "Milton", "Virgil"], answer: "Dante Alighieri" },
-  { question: "What is the pH value of pure water?", options: ["6", "7", "8", "9"], answer: "7" },
-  { question: "Which is the fastest aquatic animal?", options: ["Sailfish", "Shark", "Tuna", "Whale"], answer: "Sailfish" },
-  { question: "Which continent is known as the Dark Continent?", options: ["Africa", "Asia", "Australia", "South America"], answer: "Africa" },
-  { question: "What is the national bird of the USA?", options: ["Bald Eagle", "Sparrow", "Crow", "Peacock"], answer: "Bald Eagle" },
-  { question: "Which year did Nepal become a member of the United Nations?", options: ["1950", "1955", "1960", "1975"], answer: "1955" },
-  { question: "Which scientist developed the Periodic Table?", options: ["Dmitri Mendeleev", "Albert Einstein", "Niels Bohr", "Antoine Lavoisier"], answer: "Dmitri Mendeleev" },
-  { question: "Which country is known as the Land of a Thousand Lakes?", options: ["Finland", "Sweden", "Norway", "Iceland"], answer: "Finland" }
+  { question: "Which mountain range separates Europe and Asia?", options: ["Ural", "Alps", "Himalayas", "Andes"], answer: "Ural" }
 ];
 
 let currentQuestions = [];
@@ -470,7 +497,7 @@ function startQuiz() {
   currentQuestions = getRandomQuestions(allQuestions, 50);
   selectedAnswers = new Array(currentQuestions.length).fill(null);
   renderQuestions();
-  startTimer(900); // 15 minutes
+  startTimer(900);
 }
 
 function renderQuestions() {
@@ -489,18 +516,16 @@ function renderQuestions() {
     optionsDiv.className = "options-grid";
     
     q.options.forEach((opt, optIndex) => {
-      const letter = String.fromCharCode(65 + optIndex); // A, B, C, D
-      const displayText = `${letter}. ${opt}`;
+      const letter = String.fromCharCode(65 + optIndex);
       const btn = document.createElement("button");
       btn.className = "option-btn";
       btn.innerHTML = `<span style="font-weight:800; margin-right:8px;">${letter}</span> ${opt}`;
-      btn.setAttribute("data-opt-value", opt);  // original answer string
+      btn.setAttribute("data-opt-value", opt);
       
       btn.addEventListener("click", () => {
-        if (selectedAnswers[idx] !== null) return; // already answered
+        if (selectedAnswers[idx] !== null) return;
         const originalValue = btn.getAttribute("data-opt-value");
         selectedAnswers[idx] = originalValue;
-        // clear previous styles in this question group
         const allBtns = optionsDiv.querySelectorAll(".option-btn");
         allBtns.forEach(b => {
           b.classList.remove("selected", "correct", "wrong");
@@ -563,7 +588,6 @@ function finishQuiz() {
   let scoreValue = (correctCount * 2) - wrongCount;
   if (scoreValue < 0) scoreValue = 0;
   
-  // achievement title based on percent
   let achievementTitle = "";
   let medalIcon = "🎓";
   if (percent >= 90) { achievementTitle = "GRAND MASTER OF KNOWLEDGE"; medalIcon = "🏆🌟"; }
@@ -574,7 +598,6 @@ function finishQuiz() {
   
   const currentDate = new Date().toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
   
-  // beautiful certificate HTML
   const certificateHTML = `
     <div class="certificate-wrapper">
       <div class="certificate">
@@ -610,13 +633,11 @@ function finishQuiz() {
   resultDiv.innerHTML = certificateHTML;
 }
 
-// Ensure that if any error, but everything stable.
 window.onload = () => {
   document.getElementById("startContainer").style.display = "block";
   document.getElementById("quizContainer").style.display = "none";
   document.getElementById("resultContainer").style.display = "none";
 };
 </script>
-<footer style="text-align:center; font-size:12px; margin-top:15px;">✨ BRP DIGITAL INSTITUTE • KNOWLEDGE EMPOWERS ✨</footer>
 </body>
 </html>
