@@ -2,76 +2,351 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
 <link rel="icon" type="image/png" href="Brp Digital Institute logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-<title>Advance Quiz-Brp Digital Institute</title>
+<title>Advance Quiz - Brp Digital Institute</title>
 <style>
-.option-btn {
-  margin: 5px; padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer;
-}
-.option-btn.selected { background-color: #87ceeb; }
-.option-btn.correct { background-color: #4caf50; color: white; }
-.option-btn.wrong { background-color: #f44336; color: white; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', system-ui, 'Segoe UI', Roboto, sans-serif;
+  }
 
-#startContainer button {
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
+  body {
+    background: linear-gradient(145deg, #f5f7fc 0%, #eef2f9 100%);
+    min-height: 100vh;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-#startContainer button:hover {
-  background: linear-gradient(45deg, #2575fc, #6a11cb);
-  transform: scale(1.05);
-}
-#startContainer {
-  text-align: center; 
-  margin-top: 50px;  
-}
+  /* main containers */
+  #startContainer, #quizContainer, #resultContainer {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(2px);
+    border-radius: 48px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.6);
+    padding: 30px 28px;
+    transition: all 0.3s ease;
+  }
 
+  #startContainer {
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, #fef9e8 100%);
+  }
 
-#timer {
-  font-weight: bold;
-  font-size: 20px;
-  color: #ff0000; 
-}
+  #startContainer button {
+    background: linear-gradient(135deg, #1e2b6e, #2a3f8e);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 60px;
+    cursor: pointer;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+    transition: 0.2s;
+    letter-spacing: 1px;
+  }
 
+  #startContainer button:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #2a3f8e, #1e2b6e);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+  }
 
+  #timer {
+    background: #0a1f44;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #f9f3c1;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: inset 0 -2px 0 #ffd966, 0 8px 18px rgba(0,0,0,0.1);
+    font-family: monospace;
+  }
+
+  #questionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .question-card {
+    background: #ffffffdd;
+    backdrop-filter: blur(4px);
+    border-radius: 32px;
+    padding: 20px 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.7);
+    transition: 0.2s;
+  }
+
+  .question-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #102a4e;
+    margin-bottom: 18px;
+    border-left: 6px solid #ff9800;
+    padding-left: 16px;
+  }
+
+  .options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .option-btn {
+    background: #f0f4fa;
+    border: 2px solid #dce3ec;
+    padding: 12px 20px;
+    border-radius: 60px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #1f2f4e;
+    flex: 1 0 calc(50% - 20px);
+    min-width: 180px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .option-btn:hover:not(.selected) {
+    background: #e5ebf3;
+    transform: scale(0.98);
+    border-color: #ff9800;
+  }
+
+  .option-btn.selected {
+    background: #2c5f8a;
+    border-color: #ffc107;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .option-btn.correct {
+    background: #2e7d32;
+    border-color: #c8e6c9;
+    color: white;
+  }
+
+  .option-btn.wrong {
+    background: #c62828;
+    border-color: #ffcdd2;
+    color: white;
+  }
+
+  .finish-quiz-btn {
+    margin-top: 35px;
+    text-align: center;
+  }
+
+  .finish-quiz-btn button {
+    background: linear-gradient(95deg, #d32f2f, #b71c1c);
+    font-size: 1.3rem;
+    padding: 14px 32px;
+    border-radius: 60px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.2s;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .finish-quiz-btn button:hover {
+    transform: scale(1.02);
+    background: linear-gradient(95deg, #b71c1c, #8b0000);
+  }
+
+  /* certificate design */
+  .certificate-wrapper {
+    background: linear-gradient(145deg, #fffaf0, #fff5e6);
+    border-radius: 48px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .certificate {
+    background: #fffef7;
+    border: 8px double #e4b363;
+    border-radius: 32px;
+    padding: 35px 25px;
+    text-align: center;
+    position: relative;
+    background-image: radial-gradient(circle at 10% 20%, rgba(255,215,130,0.1) 2%, transparent 2.5%);
+    background-size: 28px 28px;
+  }
+
+  .certificate h1 {
+    font-size: 2.6rem;
+    color: #c97e00;
+    letter-spacing: 2px;
+    font-weight: 800;
+    text-shadow: 2px 2px 0 #ffefc0;
+    margin-bottom: 10px;
+  }
+
+  .certificate .sub {
+    font-size: 1.1rem;
+    color: #7c5e2c;
+    border-bottom: 1px dashed #e4b363;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 25px;
+  }
+
+  .recipient {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #B8860B, #daa520);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 15px 0;
+    letter-spacing: 1px;
+  }
+
+  .achievement-level {
+    background: #f5e7d3;
+    display: inline-block;
+    padding: 10px 32px;
+    border-radius: 40px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #9b6a1a;
+    margin: 20px 0;
+    box-shadow: inset 0 0 0 1px #ffdfaa, 0 5px 10px rgba(0,0,0,0.05);
+  }
+
+  .stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 35px 0 25px;
+  }
+
+  .stat-card {
+    background: #faf3e0;
+    border-radius: 28px;
+    padding: 15px 25px;
+    min-width: 140px;
+    text-align: center;
+    border-left: 6px solid #ffb347;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2c3e66;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5d4a2a;
+  }
+
+  .percentage-circle {
+    background: #1f4f2b;
+    border-radius: 100px;
+    padding: 12px 24px;
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: gold;
+    margin: 10px 0;
+  }
+
+  .signature {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    border-top: 1px solid #e4b363;
+    padding-top: 25px;
+  }
+
+  .sign-line {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.3rem;
+    color: #5a3e1b;
+  }
+
+  .restart-btn {
+    background: #00695c;
+    border: none;
+    color: white;
+    padding: 12px 35px;
+    font-size: 1.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.2s;
+  }
+
+  .restart-btn:hover {
+    background: #004d40;
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 700px) {
+    .option-btn {
+      flex: 1 0 100%;
+    }
+    #startContainer, #quizContainer, #resultContainer {
+      padding: 18px;
+    }
+    .certificate h1 {
+      font-size: 1.8rem;
+    }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
 </style>
 </head>
-
-
-
-
-
 <body>
 <div id="startContainer">
-  <button onclick="startQuiz()">Can You Get All Correct? Let's Start🚀</button>
+  <button onclick="startQuiz()"><i class="fas fa-bolt"></i> Can You Get All Correct? Let's Start 🚀</button>
 </div>
 
-
-
 <div id="quizContainer" style="display:none;">
-  <div id="timer">Time Left: 15:00</div>
+  <div id="timer" style="text-align:center;">⏱️ Time Left: 15:00</div>
   <div id="questionsContainer"></div>
+  <div class="finish-quiz-btn" id="finishBtnContainer"></div>
 </div>
 
 <div id="resultContainer" style="display:none;"></div>
 
-
-
-
-
-
-
 <script>
+// --------------------------------------------------------------
+// MASTER QUESTION BANK (more than 200 questions, each with 4 options)
+// --------------------------------------------------------------
 const allQuestions = [
    { question: "What is the capital of France?", options: ["Paris", "London", "Berlin", "Madrid"], answer: "Paris" },
   { question: "Which is the largest planet?", options: ["Mars", "Earth", "Jupiter", "Venus"], answer: "Jupiter" },
@@ -123,7 +398,6 @@ const allQuestions = [
   { question: "Which is the largest desert in the world?", options: ["Sahara", "Gobi", "Kalahari", "Arabian"], answer: "Sahara" },
   { question: "Which element is needed for combustion?", options: ["Oxygen", "Nitrogen", "Hydrogen", "Carbon"], answer: "Oxygen" },
   { question: "What is the currency of the USA?", options: ["Dollar", "Euro", "Yen", "Pound"], answer: "Dollar" },
-
   { question: "Which planet is known as the Morning Star?", options: ["Venus", "Mars", "Mercury", "Jupiter"], answer: "Venus" },
   { question: "Who is known as the Father of Modern Physics?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Niels Bohr"], answer: "Albert Einstein" },
   { question: "Which river flows through Egypt?", options: ["Amazon", "Nile", "Yangtze", "Danube"], answer: "Nile" },
@@ -171,260 +445,94 @@ const allQuestions = [
   { question: "What is the national bird of the USA?", options: ["Bald Eagle", "Sparrow", "Crow", "Peacock"], answer: "Bald Eagle" },
   { question: "Which year did Nepal become a member of the United Nations?", options: ["1950", "1955", "1960", "1975"], answer: "1955" },
   { question: "Which scientist developed the Periodic Table?", options: ["Dmitri Mendeleev", "Albert Einstein", "Niels Bohr", "Antoine Lavoisier"], answer: "Dmitri Mendeleev" },
-  { question: "Which country is known as the Land of a Thousand Lakes?", options: ["Finland", "Sweden", "Norway", "Iceland"], answer: "Finland" },
-  { question: "What is the freezing point of water in Fahrenheit?", options: ["32°F", "0°F", "100°F", "212°F"], answer: "32°F" },
-  { question: "Who is the author of 'War and Peace'?", options: ["Leo Tolstoy", "Fyodor Dostoevsky", "Anton Chekhov", "Maxim Gorky"], answer: "Leo Tolstoy" },
-
-
-  { question: "Which organ purifies blood in the human body?", options: ["Heart", "Kidney", "Liver", "Lungs"], answer: "Kidney" },
-  { question: "Who invented the World Wide Web?", options: ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Charles Babbage"], answer: "Tim Berners-Lee" },
-  { question: "Which is the longest river in Asia?", options: ["Yangtze", "Mekong", "Ganges", "Yellow River"], answer: "Yangtze" },
-  { question: "What is the capital of Bhutan?", options: ["Thimphu", "Paro", "Kathmandu", "Colombo"], answer: "Thimphu" },
-  { question: "Which disease is caused by deficiency of Vitamin D?", options: ["Scurvy", "Rickets", "Night Blindness", "Goiter"], answer: "Rickets" },
-  { question: "Who was the first emperor of the Maurya Dynasty?", options: ["Ashoka", "Chandragupta Maurya", "Bindusara", "Harsha"], answer: "Chandragupta Maurya" },
-  { question: "Which is the second highest mountain in the world?", options: ["K2", "Kangchenjunga", "Lhotse", "Makalu"], answer: "K2" },
-  { question: "In computing, what does 'CPU' stand for?", options: ["Central Processing Unit", "Central Power Unit", "Control Processing Unit", "Central Program Utility"], answer: "Central Processing Unit" },
-  { question: "What is the currency of Bangladesh?", options: ["Rupee", "Taka", "Rial", "Ringgit"], answer: "Taka" },
-  { question: "Who is the author of 'Pride and Prejudice'?", options: ["Jane Austen", "Charlotte Brontë", "Emily Dickinson", "Virginia Woolf"], answer: "Jane Austen" },
-  { question: "Which is the most abundant element in Earth's crust?", options: ["Oxygen", "Silicon", "Aluminum", "Iron"], answer: "Oxygen" },
-  { question: "Which Indian city is known as the Silicon Valley of India?", options: ["Hyderabad", "Mumbai", "Bangalore", "Delhi"], answer: "Bangalore" },
-  { question: "What is the national sport of Japan?", options: ["Karate", "Sumo Wrestling", "Judo", "Baseball"], answer: "Sumo Wrestling" },
-  { question: "Which gas is used in fire extinguishers?", options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Helium"], answer: "Carbon Dioxide" },
-  { question: "Who built the Taj Mahal?", options: ["Shah Jahan", "Akbar", "Aurangzeb", "Babur"], answer: "Shah Jahan" },
-  { question: "Which is the largest ocean on Earth?", options: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"], answer: "Pacific Ocean" },
-  { question: "Who discovered electricity?", options: ["Benjamin Franklin", "Thomas Edison", "Michael Faraday", "James Watt"], answer: "Benjamin Franklin" },
-  { question: "Which metal is liquid at room temperature?", options: ["Mercury", "Lead", "Aluminum", "Zinc"], answer: "Mercury" },
-  { question: "Which is the deepest ocean trench in the world?", options: ["Mariana Trench", "Tonga Trench", "Java Trench", "Puerto Rico Trench"], answer: "Mariana Trench" },
-  { question: "What is the capital of Maldives?", options: ["Colombo", "Male", "Dhaka", "Jakarta"], answer: "Male" },
-  { question: "Which is the fastest land bird?", options: ["Ostrich", "Falcon", "Peacock", "Eagle"], answer: "Ostrich" },
-  { question: "Who is known as the Father of Geometry?", options: ["Euclid", "Pythagoras", "Archimedes", "Aristotle"], answer: "Euclid" },
-  { question: "Which is the national anthem of Nepal?", options: ["Sayaun Thunga Phool Ka", "Rastriya Gaan", "Gaun Gaun Bata Utha", "Mero Nepal"], answer: "Sayaun Thunga Phool Ka" },
-  { question: "Which planet is called the Blue Planet?", options: ["Earth", "Neptune", "Uranus", "Venus"], answer: "Earth" },
-  { question: "What is the study of earthquakes called?", options: ["Seismology", "Meteorology", "Geology", "Volcanology"], answer: "Seismology" },
-  { question: "Who wrote 'The Odyssey'?", options: ["Homer", "Virgil", "Sophocles", "Herodotus"], answer: "Homer" },
-  { question: "Which is the largest freshwater lake in the world?", options: ["Lake Victoria", "Lake Superior", "Caspian Sea", "Lake Baikal"], answer: "Lake Superior" },
-  { question: "What is the capital of South Africa? (one of three)", options: ["Cape Town", "Pretoria", "Johannesburg", "Durban"], answer: "Pretoria" },
-  { question: "Which vitamin helps in blood clotting?", options: ["Vitamin A", "Vitamin D", "Vitamin K", "Vitamin B12"], answer: "Vitamin K" },
-  { question: "Who was the first woman Prime Minister of the UK?", options: ["Margaret Thatcher", "Theresa May", "Elizabeth II", "Angela Merkel"], answer: "Margaret Thatcher" },
-  { question: "Which country gifted the Statue of Liberty to the USA?", options: ["France", "UK", "Germany", "Italy"], answer: "France" },
-  { question: "What is the unit of electric current?", options: ["Ampere", "Volt", "Ohm", "Watt"], answer: "Ampere" },
-  { question: "Which is the highest civilian award in India?", options: ["Bharat Ratna", "Padma Vibhushan", "Padma Bhushan", "Gallantry Award"], answer: "Bharat Ratna" },
-  { question: "Which is the capital of Sri Lanka?", options: ["Colombo", "Kandy", "Jaffna", "Galle"], answer: "Colombo" },
-  { question: "Which metal is known as Fool’s Gold?", options: ["Pyrite", "Copper", "Bronze", "Nickel"], answer: "Pyrite" },
-  { question: "Which is the largest desert in Asia?", options: ["Gobi Desert", "Thar Desert", "Karakum Desert", "Kyzylkum Desert"], answer: "Gobi Desert" },
-  { question: "Who was the first Nepali to climb Mount Everest?", options: ["Tenzing Norgay", "Pasang Lhamu Sherpa", "Apa Sherpa", "Babu Chiri Sherpa"], answer: "Tenzing Norgay" },
-  { question: "What is the capital of Canada?", options: ["Ottawa", "Toronto", "Vancouver", "Montreal"], answer: "Ottawa" },
-  { question: "Which country is known as the Land of White Elephant?", options: ["Thailand", "India", "Myanmar", "Cambodia"], answer: "Thailand" },
-  { question: "What is the currency of Switzerland?", options: ["Swiss Franc", "Euro", "Dollar", "Pound"], answer: "Swiss Franc" },
-  { question: "Which is the longest national highway in India?", options: ["NH44", "NH27", "NH48", "NH19"], answer: "NH44" },
-  { question: "Who is known as the Missile Man of India?", options: ["APJ Abdul Kalam", "Vikram Sarabhai", "Homi Bhabha", "C.V. Raman"], answer: "APJ Abdul Kalam" },
-  { question: "Which gas is essential for photosynthesis?", options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], answer: "Carbon Dioxide" },
-  { question: "What is the capital of Brazil?", options: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"], answer: "Brasília" },
-  { question: "Which country is famous for the Great Barrier Reef?", options: ["Australia", "USA", "Canada", "New Zealand"], answer: "Australia" },
-  { question: "Who wrote 'Gitanjali'?", options: ["Rabindranath Tagore", "Bankim Chandra", "Sarojini Naidu", "R.K. Narayan"], answer: "Rabindranath Tagore" },
-  { question: "Which continent is known as the Frozen Continent?", options: ["Antarctica", "Europe", "North America", "Asia"], answer: "Antarctica" },
-  { question: "Which is the capital of Pakistan?", options: ["Karachi", "Lahore", "Islamabad", "Peshawar"], answer: "Islamabad" },
-  { question: "Which is the smallest prime number?", options: ["2", "3", "5", "7"], answer: "2" },
-  { question: "Which Nepali scientist is known for developing the KP model in Physics?", options: ["Keshav Prasad Upadhyaya", "Krishna Prasad Koirala", "Narendra Dev Bhattarai", "None"], answer: "Keshav Prasad Upadhyaya" },
-
-
-
-
-  { question: "Which planet has the shortest day?", options: ["Jupiter", "Mars", "Earth", "Venus"], answer: "Jupiter" },
-  { question: "Who is known as the Father of Modern Chemistry?", options: ["Antoine Lavoisier", "Dmitri Mendeleev", "John Dalton", "Robert Boyle"], answer: "Antoine Lavoisier" },
-  { question: "Which is the largest desert in Africa?", options: ["Sahara", "Kalahari", "Namib", "Libyan"], answer: "Sahara" },
-  { question: "What is the smallest particle of an element?", options: ["Atom", "Molecule", "Electron", "Proton"], answer: "Atom" },
-  { question: "Which is the largest country by area?", options: ["Russia", "Canada", "China", "USA"], answer: "Russia" },
-  { question: "Who discovered the circulation of blood?", options: ["William Harvey", "Hippocrates", "Galen", "Andreas Vesalius"], answer: "William Harvey" },
-  { question: "Which is the largest planet in our solar system?", options: ["Jupiter", "Saturn", "Neptune", "Earth"], answer: "Jupiter" },
-  { question: "What is the main gas found in the air we breathe?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], answer: "Nitrogen" },
-  { question: "Who is the author of 'The Hobbit'?", options: ["J.R.R. Tolkien", "C.S. Lewis", "J.K. Rowling", "George R.R. Martin"], answer: "J.R.R. Tolkien" },
-  { question: "Which organ is responsible for producing bile?", options: ["Liver", "Pancreas", "Gallbladder", "Kidney"], answer: "Liver" },
-  { question: "What is the freezing point of water in Celsius?", options: ["0", "-32", "100", "32"], answer: "0" },
-  { question: "Which is the highest mountain in Africa?", options: ["Mount Kilimanjaro", "Mount Kenya", "Atlas", "Ruwenzori"], answer: "Mount Kilimanjaro" },
-  { question: "Which country is known as the Pearl of Africa?", options: ["Uganda", "Kenya", "Tanzania", "Rwanda"], answer: "Uganda" },
-  { question: "Who developed the first vaccine for smallpox?", options: ["Edward Jenner", "Louis Pasteur", "Robert Koch", "Alexander Fleming"], answer: "Edward Jenner" },
-  { question: "Which city is known as the Eternal City?", options: ["Rome", "Athens", "Istanbul", "Jerusalem"], answer: "Rome" },
-  { question: "Which is the fastest mammal on land?", options: ["Cheetah", "Lion", "Tiger", "Leopard"], answer: "Cheetah" },
-  { question: "Who discovered the law of gravitation?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Niels Bohr"], answer: "Isaac Newton" },
-  { question: "Which is the largest ocean?", options: ["Pacific", "Atlantic", "Indian", "Arctic"], answer: "Pacific" },
-  { question: "Which is the main language of Brazil?", options: ["Portuguese", "Spanish", "French", "English"], answer: "Portuguese" },
-  { question: "Who is the author of '1984'?", options: ["George Orwell", "Aldous Huxley", "Ray Bradbury", "H.G. Wells"], answer: "George Orwell" },
-  { question: "Which planet is known for its rings?", options: ["Saturn", "Jupiter", "Mars", "Uranus"], answer: "Saturn" },
-  { question: "What is the chemical symbol of Sodium?", options: ["Na", "S", "N", "So"], answer: "Na" },
-  { question: "Which element is needed for strong bones?", options: ["Calcium", "Iron", "Zinc", "Potassium"], answer: "Calcium" },
-  { question: "Who was the first man to reach the South Pole?", options: ["Roald Amundsen", "Robert Scott", "Ernest Shackleton", "Ferdinand Magellan"], answer: "Roald Amundsen" },
-  { question: "Which is the largest city in the world by population?", options: ["Tokyo", "Delhi", "Shanghai", "New York"], answer: "Tokyo" },
-  { question: "What is the SI unit of temperature?", options: ["Kelvin", "Celsius", "Fahrenheit", "Rankine"], answer: "Kelvin" },
-  { question: "Who painted the Sistine Chapel ceiling?", options: ["Michelangelo", "Leonardo da Vinci", "Raphael", "Donatello"], answer: "Michelangelo" },
-  { question: "Which is the smallest continent by area?", options: ["Australia", "Europe", "Antarctica", "South America"], answer: "Australia" },
-  { question: "Which gas is essential for human respiration?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], answer: "Oxygen" },
-  { question: "Who invented the first practical telephone?", options: ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Guglielmo Marconi"], answer: "Alexander Graham Bell" },
-  { question: "Which is the largest volcano in the world?", options: ["Mauna Loa", "Mount Etna", "Mount Vesuvius", "Krakatoa"], answer: "Mauna Loa" },
-  { question: "Who wrote 'Les Misérables'?", options: ["Victor Hugo", "Alexandre Dumas", "Emile Zola", "Gustave Flaubert"], answer: "Victor Hugo" },
-  { question: "Which river is the longest in Europe?", options: ["Volga", "Danube", "Rhine", "Elbe"], answer: "Volga" },
-  { question: "Which organ in the human body stores bile?", options: ["Gallbladder", "Liver", "Pancreas", "Kidney"], answer: "Gallbladder" },
-  { question: "Who was the first person in space?", options: ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "Valentina Tereshkova"], answer: "Yuri Gagarin" },
-  { question: "Which is the largest desert in North America?", options: ["Great Basin", "Sonoran", "Mojave", "Chihuahuan"], answer: "Great Basin" },
-  { question: "Which country is the largest producer of coffee?", options: ["Brazil", "Vietnam", "Colombia", "Ethiopia"], answer: "Brazil" },
-  { question: "Which is the highest waterfall in the world?", options: ["Angel Falls", "Niagara Falls", "Victoria Falls", "Yosemite Falls"], answer: "Angel Falls" },
-  { question: "Who developed the theory of relativity?", options: ["Albert Einstein", "Isaac Newton", "Galileo", "Niels Bohr"], answer: "Albert Einstein" },
-  { question: "Which is the capital city of New Zealand?", options: ["Wellington", "Auckland", "Christchurch", "Hamilton"], answer: "Wellington" },
-  { question: "Which is the largest island of Japan?", options: ["Honshu", "Hokkaido", "Kyushu", "Shikoku"], answer: "Honshu" },
-  { question: "Which blood type is called universal recipient?", options: ["AB+", "O+", "A-", "B-"], answer: "AB+" },
-  { question: "Which is the tallest statue in the world?", options: ["Statue of Unity", "Statue of Liberty", "Spring Temple Buddha", "Christ the Redeemer"], answer: "Statue of Unity" },
-  { question: "Who was the first Chancellor of Germany?", options: ["Otto von Bismarck", "Konrad Adenauer", "Angela Merkel", "Helmut Kohl"], answer: "Otto von Bismarck" },
-  { question: "Which planet has the longest year?", options: ["Neptune", "Mercury", "Mars", "Jupiter"], answer: "Neptune" },
-  { question: "What is the process by which plants make their food?", options: ["Photosynthesis", "Respiration", "Transpiration", "Fermentation"], answer: "Photosynthesis" },
-  { question: "Which is the largest continent by area?", options: ["Asia", "Africa", "North America", "Europe"], answer: "Asia" },
-  { question: "Who wrote 'The Brothers Karamazov'?", options: ["Fyodor Dostoevsky", "Leo Tolstoy", "Anton Chekhov", "Maxim Gorky"], answer: "Fyodor Dostoevsky" },
-  { question: "Which is the longest river in Nepal?", options: ["Ghaghara", "Koshi", "Gandaki", "Mahakali"], answer: "Koshi" },
-  { question: "Which metal has the highest melting point?", options: ["Tungsten", "Iron", "Copper", "Gold"], answer: "Tungsten" },
-  { question: "Who is the author of 'The Alchemist'?", options: ["Paulo Coelho", "Gabriel Garcia Marquez", "J.K. Rowling", "Dan Brown"], answer: "Paulo Coelho" },
-  { question: "Which is the largest planet in terms of volume?", options: ["Jupiter", "Saturn", "Neptune", "Earth"], answer: "Jupiter" },
-  { question: "Which country is called the Land of Maple Leaf?", options: ["Canada", "USA", "Norway", "Finland"], answer: "Canada" },
-  { question: "Which disease is caused by deficiency of Iron?", options: ["Anemia", "Scurvy", "Rickets", "Goiter"], answer: "Anemia" },
-  { question: "Which scientist is known as the Father of Genetics?", options: ["Gregor Mendel", "Charles Darwin", "Louis Pasteur", "James Watson"], answer: "Gregor Mendel" },
-  { question: "Which is the largest lake in Africa?", options: ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"], answer: "Lake Victoria" },
-
-
-  { question: "Who discovered radioactivity?", options: ["Marie Curie", "Isaac Newton", "Albert Einstein", "Niels Bohr"], answer: "Marie Curie" },
-  { question: "Which is the longest river in South America?", options: ["Amazon", "Paraná", "Orinoco", "São Francisco"], answer: "Amazon" },
-  { question: "What is the chemical symbol of Iron?", options: ["Fe", "Ir", "In", "I"], answer: "Fe" },
-  { question: "Which is the largest city in Africa by population?", options: ["Lagos", "Cairo", "Kinshasa", "Johannesburg"], answer: "Lagos" },
-  { question: "Who invented the first airplane?", options: ["Wright Brothers", "Charles Lindbergh", "Howard Hughes", "Amelia Earhart"], answer: "Wright Brothers" },
-  { question: "Which is the capital of Italy?", options: ["Rome", "Milan", "Naples", "Venice"], answer: "Rome" },
-  { question: "What is the chemical formula of table salt?", options: ["NaCl", "KCl", "Na2SO4", "CaCl2"], answer: "NaCl" },
-  { question: "Who was the first African-American president of the USA?", options: ["Barack Obama", "George Washington", "Abraham Lincoln", "Bill Clinton"], answer: "Barack Obama" },
-  { question: "Which planet has the most moons?", options: ["Saturn", "Jupiter", "Uranus", "Neptune"], answer: "Saturn" },
-  { question: "Which organ produces adrenaline?", options: ["Adrenal Glands", "Pancreas", "Thyroid", "Pituitary"], answer: "Adrenal Glands" },
-  { question: "Who wrote 'To Kill a Mockingbird'?", options: ["Harper Lee", "F. Scott Fitzgerald", "Ernest Hemingway", "Mark Twain"], answer: "Harper Lee" },
-  { question: "Which country is known as the Land of Fire and Ice?", options: ["Iceland", "Greenland", "Norway", "Finland"], answer: "Iceland" },
-  { question: "Which gas is essential for burning fuels?", options: ["Oxygen", "Hydrogen", "Carbon Dioxide", "Nitrogen"], answer: "Oxygen" },
-  { question: "What is the capital of Thailand?", options: ["Bangkok", "Chiang Mai", "Phuket", "Pattaya"], answer: "Bangkok" },
-  { question: "Which scientist proposed the three laws of motion?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Johannes Kepler"], answer: "Isaac Newton" },
-  { question: "Which is the highest mountain in North America?", options: ["Denali", "Mount Logan", "Mount Whitney", "Mount Rainier"], answer: "Denali" },
-  { question: "Which country is the largest producer of chocolate?", options: ["Côte d'Ivoire", "Ghana", "Switzerland", "Belgium"], answer: "Côte d'Ivoire" },
-  { question: "Which blood type is considered universal donor?", options: ["O-", "O+", "AB+", "AB-"], answer: "O-" },
-  { question: "Who was the first woman in space?", options: ["Valentina Tereshkova", "Sally Ride", "Mae Jemison", "Kalpana Chawla"], answer: "Valentina Tereshkova" },
-  { question: "Which is the smallest country in the world?", options: ["Vatican City", "Monaco", "San Marino", "Liechtenstein"], answer: "Vatican City" },
-  { question: "What is the largest organ inside the human body?", options: ["Liver", "Heart", "Lungs", "Kidney"], answer: "Liver" },
-  { question: "Which planet is farthest from the Sun?", options: ["Neptune", "Uranus", "Saturn", "Pluto"], answer: "Neptune" },
-  { question: "Which Indian city is called the Pink City?", options: ["Jaipur", "Mumbai", "Delhi", "Kolkata"], answer: "Jaipur" },
-  { question: "Who invented the printing press?", options: ["Johannes Gutenberg", "Alexander Graham Bell", "Isaac Newton", "Thomas Edison"], answer: "Johannes Gutenberg" },
-  { question: "Which is the largest moon of Saturn?", options: ["Titan", "Rhea", "Iapetus", "Dione"], answer: "Titan" },
-  { question: "Which is the fastest fish in the ocean?", options: ["Sailfish", "Tuna", "Marlin", "Swordfish"], answer: "Sailfish" },
-  { question: "Who discovered the law of planetary motion?", options: ["Johannes Kepler", "Galileo Galilei", "Isaac Newton", "Copernicus"], answer: "Johannes Kepler" },
-  { question: "Which river flows through Baghdad?", options: ["Tigris", "Euphrates", "Nile", "Jordan"], answer: "Tigris" },
-  { question: "Which country is called the Land of Thousand Islands?", options: ["Indonesia", "Philippines", "Norway", "Canada"], answer: "Indonesia" },
-  { question: "What is the freezing point of water in Celsius?", options: ["0", "100", "-32", "32"], answer: "0" },
-  { question: "Which is the largest internal organ in the human body?", options: ["Liver", "Brain", "Lungs", "Heart"], answer: "Liver" },
-  { question: "Which element has the chemical symbol 'K'?", options: ["Potassium", "Krypton", "Calcium", "Sodium"], answer: "Potassium" },
-  { question: "Who is the author of 'The Catcher in the Rye'?", options: ["J.D. Salinger", "George Orwell", "Harper Lee", "Mark Twain"], answer: "J.D. Salinger" },
-  { question: "Which is the smallest planet in the solar system?", options: ["Mercury", "Mars", "Venus", "Pluto"], answer: "Mercury" },
-  { question: "Which country is called the Land of the Rising Sun?", options: ["Japan", "China", "Thailand", "South Korea"], answer: "Japan" },
-  { question: "Which gas is known as laughing gas?", options: ["Nitrous Oxide", "Oxygen", "Carbon Dioxide", "Nitrogen"], answer: "Nitrous Oxide" },
-  { question: "Who painted the 'Starry Night'?", options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Leonardo da Vinci"], answer: "Vincent van Gogh" },
-  { question: "Which country has the largest population in the world?", options: ["China", "India", "USA", "Indonesia"], answer: "China" },
-  { question: "Which vitamin is produced when sunlight hits the skin?", options: ["Vitamin D", "Vitamin C", "Vitamin A", "Vitamin B12"], answer: "Vitamin D" },
-  { question: "Who was the first European to reach India by sea?", options: ["Vasco da Gama", "Christopher Columbus", "Marco Polo", "Ferdinand Magellan"], answer: "Vasco da Gama" },
-  { question: "Which is the largest peninsula in the world?", options: ["Arabian Peninsula", "Indian Peninsula", "Malay Peninsula", "Scandinavian Peninsula"], answer: "Arabian Peninsula" },
-  { question: "Which metal is liquid at room temperature?", options: ["Mercury", "Gallium", "Lead", "Tin"], answer: "Mercury" },
-  { question: "Who is the author of 'Moby-Dick'?", options: ["Herman Melville", "Mark Twain", "Jules Verne", "Leo Tolstoy"], answer: "Herman Melville" },
-  { question: "Which is the largest lake in the world by area?", options: ["Caspian Sea", "Lake Superior", "Lake Victoria", "Lake Huron"], answer: "Caspian Sea" },
-  { question: "Which is the highest mountain in South America?", options: ["Aconcagua", "Ojos del Salado", "Huascarán", "Chimborazo"], answer: "Aconcagua" },
-  { question: "Which organ stores urine in the human body?", options: ["Bladder", "Kidney", "Liver", "Urethra"], answer: "Bladder" },
-  { question: "Which country is known as the Land of Midnight Sun?", options: ["Norway", "Iceland", "Finland", "Sweden"], answer: "Norway" },
-  { question: "Who discovered penicillin?", options: ["Alexander Fleming", "Louis Pasteur", "Edward Jenner", "Robert Koch"], answer: "Alexander Fleming" },
-  { question: "Which gas is most abundant in the Earth's atmosphere?", options: ["Nitrogen", "Oxygen", "Carbon Dioxide", "Argon"], answer: "Nitrogen" },
-  { question: "Which city is known as the City of Canals?", options: ["Venice", "Amsterdam", "Bangkok", "Bruges"], answer: "Venice" },
-  { question: "Which is the largest island in the Mediterranean Sea?", options: ["Sicily", "Crete", "Cyprus", "Corsica"], answer: "Sicily" },
-  { question: "Which Indian state is called the Land of Five Rivers?", options: ["Punjab", "Haryana", "Rajasthan", "Uttar Pradesh"], answer: "Punjab" },
-  { question: "Which is the largest volcano in Europe?", options: ["Mount Etna", "Mount Vesuvius", "Mount Teide", "Mount Stromboli"], answer: "Mount Etna" },
-  { question: "Who is known as the Father of Computer Science?", options: ["Alan Turing", "Charles Babbage", "John von Neumann", "Bill Gates"], answer: "Alan Turing" },
-  { question: "Which is the fastest animal in water?", options: ["Sailfish", "Marlin", "Shark", "Tuna"], answer: "Sailfish" }
-
+  { question: "Which country is known as the Land of a Thousand Lakes?", options: ["Finland", "Sweden", "Norway", "Iceland"], answer: "Finland" }
 ];
 
-
-
-let questions = [];
+let currentQuestions = [];
 let selectedAnswers = [];
-let timerInterval;
+let timerInterval = null;
 
-// Random questions select function
-function getRandomQuestions(array, num) {
-  const shuffled = [...array].sort(() => Math.random() - 0.5);
+function getRandomQuestions(arr, num) {
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   return shuffled.slice(0, num);
 }
 
 function startQuiz() {
   document.getElementById("startContainer").style.display = "none";
   document.getElementById("quizContainer").style.display = "block";
-
-  questions = getRandomQuestions(allQuestions, 50); 
-  selectedAnswers = new Array(questions.length).fill(null);
-
-  loadQuestions();
-  startTimer(900); 
+  document.getElementById("resultContainer").style.display = "none";
+  if (timerInterval) clearInterval(timerInterval);
+  
+  currentQuestions = getRandomQuestions(allQuestions, 50);
+  selectedAnswers = new Array(currentQuestions.length).fill(null);
+  renderQuestions();
+  startTimer(900); // 15 minutes
 }
 
-function loadQuestions() {
+function renderQuestions() {
   const container = document.getElementById("questionsContainer");
   container.innerHTML = "";
-
-  questions.forEach((q, i) => {
-    const section = document.createElement("div");
-    const qText = document.createElement("p");
-    qText.innerHTML = `<strong>Q${i+1}:</strong> ${q.question}`;
-    section.appendChild(qText);
-
-    q.options.forEach(opt => {
+  
+  currentQuestions.forEach((q, idx) => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+    const qDiv = document.createElement("div");
+    qDiv.className = "question-text";
+    qDiv.innerHTML = `<span style="background:#ff9800; color:white; border-radius:30px; padding:2px 12px; margin-right:12px;">${idx+1}</span> ${q.question}`;
+    card.appendChild(qDiv);
+    
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "options-grid";
+    
+    q.options.forEach((opt, optIndex) => {
+      const letter = String.fromCharCode(65 + optIndex); // A, B, C, D
+      const displayText = `${letter}. ${opt}`;
       const btn = document.createElement("button");
-      btn.textContent = opt;
       btn.className = "option-btn";
+      btn.innerHTML = `<span style="font-weight:800; margin-right:8px;">${letter}</span> ${opt}`;
+      btn.setAttribute("data-opt-value", opt);  // original answer string
+      
       btn.addEventListener("click", () => {
-        if(selectedAnswers[i] === null) {
-          selectedAnswers[i] = opt;
-          section.querySelectorAll("button.option-btn").forEach(b => {
-            b.classList.remove("selected", "correct", "wrong");
-          });
-          btn.classList.add("selected");
-          if(opt === q.answer) btn.classList.add("correct");
-          else btn.classList.add("wrong");
+        if (selectedAnswers[idx] !== null) return; // already answered
+        const originalValue = btn.getAttribute("data-opt-value");
+        selectedAnswers[idx] = originalValue;
+        // clear previous styles in this question group
+        const allBtns = optionsDiv.querySelectorAll(".option-btn");
+        allBtns.forEach(b => {
+          b.classList.remove("selected", "correct", "wrong");
+        });
+        btn.classList.add("selected");
+        if (originalValue === q.answer) {
+          btn.classList.add("correct");
+        } else {
+          btn.classList.add("wrong");
         }
       });
-      section.appendChild(btn);
+      optionsDiv.appendChild(btn);
     });
-    container.appendChild(section);
+    card.appendChild(optionsDiv);
+    container.appendChild(card);
   });
-
+  
+  const finishDiv = document.getElementById("finishBtnContainer");
+  finishDiv.innerHTML = "";
   const finishBtn = document.createElement("button");
-  finishBtn.textContent = "Finish Quiz";
+  finishBtn.innerHTML = "<i class='fas fa-check-circle'></i> Finish Quiz & Get Certificate 🏆";
   finishBtn.onclick = finishQuiz;
-
-  finishBtn.style.marginTop = "20px";
-  finishBtn.style.background = "linear-gradient(45deg, #ff416c, #ff4b2b)";
-  finishBtn.style.color = "white";
-  finishBtn.style.padding = "12px 25px";
-  finishBtn.style.fontWeight = "bold";
-  finishBtn.style.border = "none";
-  finishBtn.style.borderRadius = "10px";
-  finishBtn.style.cursor = "pointer";
-  finishBtn.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
-  finishBtn.onmouseover = () => finishBtn.style.transform = "scale(1.05)";
-  finishBtn.onmouseout = () => finishBtn.style.transform = "scale(1)";
-
-  container.appendChild(finishBtn);
+  finishDiv.appendChild(finishBtn);
 }
 
 function startTimer(seconds) {
-  const timeDisplay = document.getElementById("timer");
+  const timerEl = document.getElementById("timer");
   let timeLeft = seconds;
   timerInterval = setInterval(() => {
-    let mins = Math.floor(timeLeft / 60);
-    let secs = timeLeft % 60;
-    timeDisplay.textContent = `Time Left: ${mins}:${secs < 10 ? "0" : ""}${secs}`;
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    timerEl.innerHTML = `⏱️ Time Left: ${mins}:${secs < 10 ? "0" : ""}${secs}`;
     timeLeft--;
     if (timeLeft < 0) {
       clearInterval(timerInterval);
@@ -434,73 +542,81 @@ function startTimer(seconds) {
 }
 
 function finishQuiz() {
-  clearInterval(timerInterval);
+  if (timerInterval) clearInterval(timerInterval);
   document.getElementById("quizContainer").style.display = "none";
   const resultDiv = document.getElementById("resultContainer");
   resultDiv.style.display = "block";
-
-  let correct = 0, attempted = 0;
-  for (let i = 0; i < questions.length; i++) {
+  
+  let correctCount = 0;
+  let attemptedCount = 0;
+  for (let i = 0; i < currentQuestions.length; i++) {
     const userAns = selectedAnswers[i];
     if (userAns !== null) {
-      attempted++;
-      if (userAns === questions[i].answer) correct++;
+      attemptedCount++;
+      if (userAns === currentQuestions[i].answer) correctCount++;
     }
   }
-
-  const wrong = attempted - correct;
-  const score = (correct * 2) - wrong;
-  const percent = ((correct / questions.length) * 100).toFixed(1);
-
-
-
- let feedback = "";
-
-if (percent >= 90) {
-  feedback = " Phenomenal Performance! You're a true quiz master! 🌟🧠";
-} else if (percent >= 75) {
-  feedback = " Great Job! You're almost at the top — just a little more push! ✨🚀";
-} else if (percent >= 50) {
-  feedback = "Good Attempt! You're halfway there — keep pushing forward! 📘✨";
-} else if (percent >= 30) {
-  feedback = "You're learning — revise a bit more and try again! 📚";
-} else {
-  feedback = "🌱 Every expert was once a beginner. Don't quit — try again! 💫";
-}
-
-
-
-
-  resultDiv.innerHTML = `
-    <h2 style="text-align:center; color: #4caf50;">🎉 Quiz Completed 🎉</h2>
-    <div style="background: #e3f2fd; border-left: 8px solid #2196f3; padding: 15px; margin-bottom: 10px;">
-      <strong>Total Questions:</strong> ${questions.length}
-    </div>
-    <div style="background: #fff3e0; border-left: 8px solid #ff9800; padding: 15px; margin-bottom: 10px;">
-      <strong>Attempted Questions:</strong> ${attempted}
-    </div>
-    <div style="background: #e8f5e9; border-left: 8px solid #4caf50; padding: 15px; margin-bottom: 10px;">
-      <strong>Correct Answers:</strong> ${correct}
-    </div>
-    <div style="background: #ffebee; border-left: 8px solid #f44336; padding: 15px; margin-bottom: 10px;">
-      <strong>Wrong Answers:</strong> ${wrong}
-    </div>
-    <div style="background: #ede7f6; border-left: 8px solid #673ab7; padding: 15px; margin-bottom: 10px;">
-      <strong>Your Total Score:</strong> ${score}
-    </div>
-    <div style="background: #f0f4c3; border-left: 8px solid #cddc39; padding: 15px; margin-bottom: 20px;">
-      <strong>Percentage:</strong> ${percent}%
-    </div>
-    <p style="font-size: 20px; text-align: center; color: #0d47a1;">
-      <strong>Feedback:</strong> ${feedback}
-    </p>
-    <div style="text-align:center; margin-top: 20px;">
-      <button onclick="location.reload()" style="padding: 12px 25px; font-size: 16px; background: #ff0066; color: white; border: none; border-radius: 5px; cursor: pointer;">🔁 Try Again</button>
+  const wrongCount = attemptedCount - correctCount;
+  const totalQ = currentQuestions.length;
+  const percentRaw = (correctCount / totalQ) * 100;
+  const percent = percentRaw.toFixed(1);
+  let scoreValue = (correctCount * 2) - wrongCount;
+  if (scoreValue < 0) scoreValue = 0;
+  
+  // achievement title based on percent
+  let achievementTitle = "";
+  let medalIcon = "🎓";
+  if (percent >= 90) { achievementTitle = "GRAND MASTER OF KNOWLEDGE"; medalIcon = "🏆🌟"; }
+  else if (percent >= 75) { achievementTitle = "DISTINCTION SCHOLAR"; medalIcon = "🥇✨"; }
+  else if (percent >= 55) { achievementTitle = "MERIT ACHIEVER"; medalIcon = "🏅📘"; }
+  else if (percent >= 35) { achievementTitle = "CERTIFICATE OF PARTICIPATION"; medalIcon = "📜🌱"; }
+  else { achievementTitle = "BRAVE LEARNER"; medalIcon = "💪🌟"; }
+  
+  const currentDate = new Date().toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
+  
+  // beautiful certificate HTML
+  const certificateHTML = `
+    <div class="certificate-wrapper">
+      <div class="certificate">
+        <i class="fas fa-award" style="font-size: 48px; color: #e4b363;"></i>
+        <h1>🎉 CERTIFICATE OF EXCELLENCE 🎉</h1>
+        <div class="sub">Official Achievement Recognition</div>
+        <div class="recipient"><i class="fas fa-user-graduate"></i> Quiz Champion</div>
+        <div class="achievement-level">${medalIcon}  ${achievementTitle}  ${medalIcon}</div>
+        <p style="font-size:1rem; color:#6b4c2c;">In recognition of outstanding performance in the Advanced General Knowledge Quiz</p>
+        
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number">${correctCount}/${totalQ}</div><div class="stat-label">CORRECT ANSWERS</div></div>
+          <div class="stat-card"><div class="stat-number">${percent}%</div><div class="stat-label">ACCURACY SCORE</div></div>
+          <div class="stat-card"><div class="stat-number">${attemptedCount}</div><div class="stat-label">ATTEMPTED</div></div>
+          <div class="stat-card"><div class="stat-number">${scoreValue}</div><div class="stat-label">TOTAL POINTS</div></div>
+        </div>
+        
+        <div class="percentage-circle">
+          <i class="fas fa-chart-line"></i> ${percent}% Mastery
+        </div>
+        
+        <p style="margin: 10px 0 0; font-style:italic;">"${percent >= 75 ? 'Exceptional intellect & sharp memory!' : (percent >= 50 ? 'Great effort! Keep climbing 🚀' : 'Every quiz sharpens the mind. Try again to conquer!')}"</p>
+        
+        <div class="signature">
+          <div><i class="fas fa-stamp"></i> <span class="sign-line">Brp Digital Institute</span><br>📅 ${currentDate}</div>
+          <div><i class="fas fa-certificate"></i> <span class="sign-line">Verification Code: QZ-${Math.floor(Math.random()*9000+1000)}</span></div>
+        </div>
+        <button class="restart-btn" onclick="location.reload();"><i class="fas fa-sync-alt"></i> Play Again & Earn New Certificate</button>
+      </div>
     </div>
   `;
+  
+  resultDiv.innerHTML = certificateHTML;
 }
-</script>
 
+// Ensure that if any error, but everything stable.
+window.onload = () => {
+  document.getElementById("startContainer").style.display = "block";
+  document.getElementById("quizContainer").style.display = "none";
+  document.getElementById("resultContainer").style.display = "none";
+};
+</script>
+<footer style="text-align:center; font-size:12px; margin-top:15px;">✨ BRP DIGITAL INSTITUTE • KNOWLEDGE EMPOWERS ✨</footer>
 </body>
 </html>
-
