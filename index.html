@@ -1,4 +1,3 @@
-<!-- quiz section.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,129 +7,25 @@
   <link rel="icon" type="image/png" href="Brp Digital Institute logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-height: 100vh;
-      margin: 0;
-      font-size: 18px;
-      background-color: #111;
-      color: white;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-    #class-select-section,
-    #password-section,
-    #quiz-section,
-    #additional-content {
-      margin-top: 20px;
-      max-width: 100%;
-      text-align: center;
-    }
-    #quiz-section {
-      display: none;
-    }
-    .question-numbers {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      background-color: #111;
-      padding: 10px;
-      z-index: 10;
-      overflow-x: auto;
-      max-width: 100%;
-    }
-    .question-numbers button {
-      margin: 5px;
-      font-size: 30px;
-      padding: 10px;
-      background-color: blue;
-      color: white;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .question-numbers button.selected {
-      background-color: red;
-      font-weight: bold;
-    }
-    .question-section {
-      display: none;
-      margin-top: 20px;
-    }
-    .question-section.active {
-      display: block;
-    }
-    .choice {
-      margin: 5px;
-      font-size: 30px;
-      padding: 10px;
-      background-color: #333;
-      color: white;
-      border: 1px solid #555;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .choice.selected {
-      background-color: orange;
-    }
-    .choice.correct {
-      background-color: #28a745;
-      border-color: #218838;
-    }
-    .choice.incorrect {
-      background-color: #dc3545;
-      border-color: #c82333;
-    }
-    #error-message {
-      font-size: 22px;
-      color: red;
-      display: none;
-    }
-    .question-section h2 {
-      font-size: 50px;
-      font-weight: bold;
-    }
-    .select {
-      font-size: 18px;
-      padding: 10px 20px;
-      width: 250px;
-      border-radius: 5px;
-      border: 2px solid #888;
-      background-color: #f9f9f9;
-    }
-    button.selected {
-      background-color: red;
-      color: white;
-    }
-
-
-.open-quiz-button {
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
-      color: white;
-      text-decoration: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .open-quiz-button:hover {
-      background: linear-gradient(45deg, #2575fc, #6a11cb);
-      transform: scale(1.05);
-    }
-
-
-
-
+    
+    body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; max-height: 100vh; margin: 0; font-size: 18px; background-color: #111; color: white; overflow-x: hidden; overflow-y: auto; }
+    #class-select-section, #password-section, #quiz-section { margin-top: 20px; max-width: 100%; text-align: center; }
+    #quiz-section { display: none; }
+    .question-numbers { margin-top: 20px; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; background-color: #111; padding: 10px; z-index: 10; }
+    .question-numbers button { margin: 5px; font-size: 30px; padding: 10px; background-color: blue; color: white; border: 1px solid #ccc; cursor: pointer; }
+    .question-numbers button.selected { background-color: red; }
+    .question-section { display: none; margin-top: 20px; }
+    .question-section.active { display: block; }
+    .choice { margin: 5px; font-size: 30px; padding: 10px; background-color: #333; color: white; border: 1px solid #555; cursor: pointer; }
+    .choice.selected { background-color: orange; }
+    .choice.correct { background-color: #28a745; }
+    .choice.incorrect { background-color: #dc3545; }
+    #error-message { font-size: 22px; color: red; display: none; }
+    .question-section h2 { font-size: 50px; font-weight: bold; }
+    .select { font-size: 18px; padding: 10px 20px; width: 250px; border-radius: 5px; border: 2px solid #888; background-color: #f9f9f9; }
+    .open-quiz-button { background: linear-gradient(45deg, #6a11cb, #2575fc); color: white; text-decoration: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; }
+    .open-quiz-button:hover { transform: scale(1.05); }
+    #submit-quiz-btn { background: #ff5722; font-size: 28px; padding: 12px 30px; margin: 30px auto; display: block; border: none; border-radius: 40px; cursor: pointer; color: white; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -138,24 +33,20 @@
 
 
 
-  <div id="class-select-section">
-<h1> Welcome to Quiz Hub !</h1>
-    <h2><span class="highlight" style="color: orange;">Please Choose Your Class to start the Quiz.</span></h2>
-    <select id="classSelector" class="select">
-      <option value="">- - -Select Your Class- - -</option>
-      <option value="5">Class 5</option>
-      <option value="6">Class 6</option>
-      <option value="7">Class 7</option>
-      <option value="8">Class 8</option>
-      <option value="9">Class 9</option>
-    </select>
+
+<div id="class-select-section">
+  <h1>Welcome to Quiz Hub !</h1>
+  <h2><span style="color: orange;">Please Choose Your Class to start the Quiz.</span></h2>
+  <select id="classSelector" class="select">
+    <option value="">- - -Select Your Class- - -</option>
+    <option value="5">Class 5</option><option value="6">Class 6</option><option value="7">Class 7</option>
+    <option value="8">Class 8</option><option value="9">Class 9</option>
+  </select>
 
 
-
-
-    <button onclick="showPasswordSection()" style="color: white; background-color: #ff0066; border: 2px solid white; border-radius: 5px; padding: 10px 20px;">Next</button>
-    <h3><span class="highlight" style="color: yellow;">Designed By <span class="highlight" style="color:skyblue;"> Brpmailo </span></h3>  
-  </div>
+  <button onclick="showPasswordSection()" style="color: white; background-color: #ff0066; border: 2px solid white; border-radius: 5px; padding: 10px 20px;">Next</button>
+  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></h3>  
+</div>
 
 
 
@@ -164,22 +55,39 @@
 </div>
 
 
-  <div id="password-section" style="display:none;">
-    <h2>Enter Password for Selected Class</h2>
-    <input type="password" id="password-input" placeholder="Enter Password" style="font-size: 18px; padding: 10px" />
-    <button onclick="validatePassword()" style="font-size: 18px; padding: 10px">Submit</button>
-    <p id="error-message">Incorrect password, please try again.</p>
-    <h3><span class="highlight" style="color: yellow;">Designed By <span class="highlight" style="color:skyblue;"> Brpmailo </span></h3>
-  </div>
 
 
 
-  <div id="quiz-section">
-    <h1 id="quiz-title">Quiz</h1>
-    <div class="question-numbers" id="question-numbers-container"></div>
-    <div id="questions-container"></div>
-  </div>
- </select>
+<div id="password-section" style="display:none;">
+  <h2>Enter Password for Selected Class</h2>
+  <input type="password" id="password-input" placeholder="Enter Password" style="font-size: 18px; padding: 10px" />
+  <button onclick="validatePassword()" style="font-size: 18px; padding: 10px">Submit</button>
+  <p id="error-message">Incorrect password, please try again.</p>
+  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></h3>
+</div>
+
+
+
+
+<div id="student-info-form" style="display: none; background: #222; padding: 20px; border-radius: 10px; margin: 20px;">
+  <h3>📋 Your Information (Optional)</h3>
+  <input type="text" id="student-name" placeholder="Full Name (Optional)" style="width: 80%; padding: 10px; margin: 8px;">
+  <input type="text" id="student-symbol" placeholder="Symbol Number (Optional)" style="width: 80%; padding: 10px; margin: 8px;">
+  <p style="font-size: 16px;">Class: <strong id="display-class"></strong></p>
+  <button id="confirm-save-btn" style="background: #4caf50; padding: 10px 20px;">✅ Save My Score</button>
+  <button id="skip-save-btn" style="background: #777; padding: 10px 20px;">⏩ Skip & Continue</button>
+</div>
+
+
+
+
+
+<div id="quiz-section">
+  <h1 id="quiz-title">Quiz</h1>
+  <div class="question-numbers" id="question-numbers-container"></div>
+  <div id="questions-container"></div>
+  <button id="submit-quiz-btn" style="display:none;">📥 Submit Quiz & Save Your Record</button>
+</div>
 
 
 
@@ -796,138 +704,220 @@ const class9QuizData = [
     "choices": ["पुँजीवादी", "आदिम साम्यवाद", "समाजवादी", "सामन्तवादी"],
     "answer": "आदिम साम्यवाद"
   },
+
+
+
+
 	
   ];
+  let currentClass = "";
+  let currentQuizData = [];
+  let userSelections = [];
 
 
 
 
-    let currentClass = "";
-    let currentQuizData = [];
-    const clickedQuestions = new Set();
+
+
+ // Google Apps Script URL - तपाईंले पाएको नयाँ URL राख्नुहोस्
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwljvHGBxHlcAhJ-FUtwCM7C_3qyUWuWlqbq1OoDBxHesfMGmUYshHG5AoImz0C0URggw/exec";
 
 
 
-
-    function showPasswordSection() {
-      const selectedClass = document.getElementById("classSelector").value;
-      if (!selectedClass) {
-        alert("Please select a class first.");
-        return;
-      }
-      currentClass = selectedClass;
-      document.getElementById("class-select-section").style.display = "none";
-      document.getElementById("password-section").style.display = "block";
-      document.getElementById("error-message").style.display = "none";
+async function saveScoreToSheets(studentName, className, symbolNo, score, totalQuestions) {
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        name: studentName, 
+        class: className, 
+        symbol: symbolNo, 
+        score: score, 
+        total: totalQuestions 
+      })
+    });
+    const result = await response.json();
+    if (result.status === "ok") {
+      alert(`✅ Success! ${studentName || "Anonymous"}, your score ${score}/${totalQuestions} saved.`);
+    } else {
+      alert("Saved but response unclear.");
     }
+  } catch (err) {
+    console.error(err);
+    alert(`⚠️ Could not connect to Google Sheets, but your score is ${score}/${totalQuestions}. Please check script URL.`);
+  }
+}
 
-    function validatePassword() {
-      const enteredPassword = document.getElementById("password-input").value;
-      const errorMessage = document.getElementById("error-message");
 
-      if (enteredPassword === classPasswords[currentClass]) {
-        errorMessage.style.display = "none";
-        document.getElementById("password-section").style.display = "none";
 
-        if (currentClass === "5") currentQuizData = class5QuizData;
-        else if (currentClass === "6") currentQuizData = class6QuizData;
-        else if (currentClass === "7") currentQuizData = class7QuizData;
-        else if (currentClass === "8") currentQuizData = class8QuizData;
-         else if (currentClass === "9") currentQuizData = class9QuizData;
 
-        document.getElementById("quiz-title").textContent = "Quiz Competition - Class " + currentClass;
-        document.getElementById("quiz-section").style.display = "block";
-        renderQuiz();
-      } else {
-        errorMessage.style.display = "block";
-      }
+
+
+
+
+  function showPasswordSection() {
+    const selectedClass = document.getElementById("classSelector").value;
+    if (!selectedClass) { alert("Please select a class first."); return; }
+    currentClass = selectedClass;
+    document.getElementById("class-select-section").style.display = "none";
+    document.getElementById("password-section").style.display = "block";
+    document.getElementById("error-message").style.display = "none";
+  }
+
+
+
+
+
+  function validatePassword() {
+    const enteredPassword = document.getElementById("password-input").value;
+    if (enteredPassword === classPasswords[currentClass]) {
+      document.getElementById("password-section").style.display = "none";
+      if (currentClass === "5") currentQuizData = class5QuizData;
+      else if (currentClass === "6") currentQuizData = class6QuizData;
+      else if (currentClass === "7") currentQuizData = class7QuizData;
+      else if (currentClass === "8") currentQuizData = class8QuizData;
+      else if (currentClass === "9") currentQuizData = class9QuizData;
+      
+      userSelections = new Array(currentQuizData.length).fill(null);
+      document.getElementById("quiz-title").textContent = "Quiz Competition - Class " + currentClass;
+      document.getElementById("quiz-section").style.display = "block";
+      renderQuiz();
+    } else {
+      document.getElementById("error-message").style.display = "block";
     }
+  }
+
+
+
+
 
   function renderQuiz() {
-  const questionNumbersContainer = document.getElementById("question-numbers-container");
-  const questionsContainer = document.getElementById("questions-container");
-  questionNumbersContainer.innerHTML = "";
-  questionsContainer.innerHTML = "";
+    const questionNumbersContainer = document.getElementById("question-numbers-container");
+    const questionsContainer = document.getElementById("questions-container");
+    questionNumbersContainer.innerHTML = "";
+    questionsContainer.innerHTML = "";
 
-  currentQuizData.forEach((data, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = index + 1;
-    btn.id = `qbtn-${index}`;
-    btn.onclick = () => {
-      clickedQuestions.add(index);
-      document.querySelectorAll(".question-numbers button").forEach((b, i) => {
-        if (clickedQuestions.has(i)) {
-          b.classList.add("selected");
+    const clickedQuestions = new Set();   // Store which questions have been checked
+
+    // 1. Create question number buttons
+    currentQuizData.forEach((_, idx) => {
+      const btn = document.createElement("button");
+      btn.textContent = idx + 1;
+      btn.onclick = () => {
+        // If this question has NOT been checked yet, hide the number list
+        if (!clickedQuestions.has(idx)) {
+          questionNumbersContainer.style.display = "none";
         }
-      });
-      questionsContainer.querySelectorAll(".question-section").forEach((q) => q.classList.remove("active"));
-      document.getElementById(`question-${index}`).classList.add("active");
-
-      // ✅ Hide question number section when a question is selected
-      questionNumbersContainer.style.display = 'none';
-    };
-    questionNumbersContainer.appendChild(btn);
-  });
-
-  currentQuizData.forEach((data, index) => {
-    const questionSection = document.createElement("div");
-    questionSection.classList.add("question-section");
-    questionSection.id = `question-${index}`;
-
-    const questionText = document.createElement("h2");
-    questionText.textContent = data.question;
-    questionSection.appendChild(questionText);
-
-    data.choices.forEach((choice) => {
-      const choiceBtn = document.createElement("button");
-      choiceBtn.textContent = choice;
-      choiceBtn.classList.add("choice");
-      choiceBtn.onclick = () => {
-        questionSection.querySelectorAll(".choice").forEach((btn) => btn.classList.remove("selected"));
-        choiceBtn.classList.add("selected");
+        // Activate selected question
+        document.querySelectorAll(".question-section").forEach(s => s.classList.remove("active"));
+        document.getElementById(`question-${idx}`).classList.add("active");
       };
-      questionSection.appendChild(choiceBtn);
+      questionNumbersContainer.appendChild(btn);
     });
 
-    const checkAnswerBtn = document.createElement("button");
-    checkAnswerBtn.textContent = "Check Right Answer";
-    checkAnswerBtn.classList.add("check-answer");
+    // 2. Create each question's UI
+    currentQuizData.forEach((data, idx) => {
+      const qDiv = document.createElement("div");
+      qDiv.classList.add("question-section");
+      qDiv.id = `question-${idx}`;
+      qDiv.innerHTML = `<h2>${data.question}</h2>`;
 
-    checkAnswerBtn.onclick = () => {
-      questionSection.querySelectorAll(".choice").forEach((btn) => {
-        btn.disabled = true;
-        if (btn.textContent === data.answer) {
-          btn.classList.add("correct");
-        } else if (btn.classList.contains("selected")) {
-          btn.classList.add("incorrect");
-        }
+      // Choice buttons
+      data.choices.forEach(choice => {
+        const choiceBtn = document.createElement("button");
+        choiceBtn.textContent = choice;
+        choiceBtn.classList.add("choice");
+        if (userSelections[idx] === choice) choiceBtn.classList.add("selected");
+
+        choiceBtn.onclick = () => {
+          qDiv.querySelectorAll(".choice").forEach(btn => btn.classList.remove("selected"));
+          choiceBtn.classList.add("selected");
+          userSelections[idx] = choice;
+        };
+        qDiv.appendChild(choiceBtn);
       });
 
-      // Show "Congratulations!" if correct
-      const selected = questionSection.querySelector(".selected");
-      const isCorrect = selected && selected.textContent === data.answer;
-      if (isCorrect) {
-        const congrats = document.createElement("p");
-        congrats.textContent = "🎉 Congratulations! 🎉";
-        congrats.style.color = "pink";
-        congrats.style.fontSize = "25px";
-        congrats.style.marginTop = "10px";
-        questionSection.appendChild(congrats);
+      // Check Answer button
+      const checkBtn = document.createElement("button");
+      checkBtn.textContent = "Check Right Answer";
+      checkBtn.style.margin = "10px";
+      checkBtn.style.padding = "10px";
+      checkBtn.onclick = () => {
+        const selected = userSelections[idx];
+        if (!selected) {
+          alert("Please select an answer first!");
+          return;
+        }
+        // Mark this question as checked (make number button red)
+        clickedQuestions.add(idx);
+        document.querySelectorAll(".question-numbers button").forEach((btn, i) => {
+          if (clickedQuestions.has(i)) btn.classList.add("selected");
+        });
+
+        // Disable all choices and show correct/incorrect
+        qDiv.querySelectorAll(".choice").forEach(btn => {
+          btn.disabled = true;
+          if (btn.textContent === data.answer) btn.classList.add("correct");
+          else if (btn.textContent === selected && btn.textContent !== data.answer) btn.classList.add("incorrect");
+        });
+        if (selected === data.answer) {
+          const congrats = document.createElement("p");
+          congrats.textContent = "🎉 Congratulations! 🎉";
+          congrats.style.color = "pink";
+          congrats.style.fontSize = "25px";
+          qDiv.appendChild(congrats);
+        }
+        checkBtn.disabled = true;
+        // Hide number list, then show after 3 seconds
+        questionNumbersContainer.style.display = "none";
+        setTimeout(() => {
+          questionNumbersContainer.style.display = "flex";
+        }, 3000);
+      };
+      qDiv.appendChild(checkBtn);
+      questionsContainer.appendChild(qDiv);
+    });
+
+    // Initially show number list
+    questionNumbersContainer.style.display = "flex";
+
+    // 3. Submit button handler (show student info form)
+    const submitBtn = document.getElementById("submit-quiz-btn");
+    submitBtn.style.display = "block";
+    const studentForm = document.getElementById("student-info-form");
+
+    submitBtn.onclick = () => {
+      let score = 0;
+      for (let i = 0; i < currentQuizData.length; i++) {
+        if (userSelections[i] === currentQuizData[i].answer) score++;
       }
+      // Show the form, fill class name
+      document.getElementById("display-class").innerText = currentClass;
+      studentForm.style.display = "block";
+      submitBtn.style.display = "none";
 
-      // ✅ Show question number buttons after 2 seconds
-      setTimeout(() => {
-        questionNumbersContainer.style.display = 'flex';
-      }, 2000); // 2 seconds
+      // Handle save and skip buttons (clone to avoid multiple listeners)
+      const confirmBtn = document.getElementById("confirm-save-btn");
+      const skipBtn = document.getElementById("skip-save-btn");
+      const newConfirm = confirmBtn.cloneNode(true);
+      const newSkip = skipBtn.cloneNode(true);
+      confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
+      skipBtn.parentNode.replaceChild(newSkip, skipBtn);
+
+      newConfirm.onclick = () => {
+        const studentName = document.getElementById("student-name").value.trim();
+        const symbolNo = document.getElementById("student-symbol").value.trim();
+        saveScoreToSheets(studentName, currentClass, symbolNo, score, currentQuizData.length);
+        studentForm.style.display = "none";
+      };
+      newSkip.onclick = () => {
+        alert(`Your score is ${score}/${currentQuizData.length}. (Not saved to Google Sheets)`);
+        studentForm.style.display = "none";
+      };
     };
-
-
-
-    questionSection.appendChild(checkAnswerBtn);
-    questionsContainer.appendChild(questionSection);
-  });
-}
-  </script>
+  }
+</script>
 </body>
 </html>
-
