@@ -806,7 +806,7 @@ const class9QuizData = [
     document.getElementById("student-info-form").style.display = "none";
     const container = document.getElementById("google-form-container");
     container.style.display = "block";
-    document.getElementById("google-form-title").innerHTML = `📌 कक्षा ${currentClass} को Assessment Quiz (Google Form)`;
+    document.getElementById("google-form-title").innerHTML = `Class ${currentClass} Assessment Quiz`;
     document.getElementById("google-iframe").src = link;
   }
 
@@ -935,7 +935,7 @@ const class9QuizData = [
     var formData = new FormData();
     formData.append("data", JSON.stringify({name:name, class:className, symbol:symbol, score:score, total:total}));
     fetch(url, { method: "POST", body: formData })
-      .then(() => alert("✅ सेभ भयो!"))
+      .then(() => alert("✅ Have been Save"))
       .catch(() => alert("⚠️ सेभ हुँदा समस्या, तर स्कोर: "+score+"/"+total));
   }
 
