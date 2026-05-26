@@ -798,7 +798,7 @@ const class9QuizData = [
   function loadGoogleForm() {
     const link = googleFormLinks[currentClass];
     if (!link || link.includes("YOUR_CLASS")) {
-      alert("यस कक्षाको Google Form लिंक हाल्न बाँकी छ। कृपया प्राविधिकलाई सम्पर्क गर्नुहोस्।");
+      alert("यस कक्षाको Assessment लिंक हाल्न बाँकी छ। कृपया बिआरपी सर वा उहाको टिमलाई सम्पर्क गर्नुहोस्।");
       return;
     }
     document.getElementById("quiz-type-choice").style.display = "none";
@@ -936,9 +936,12 @@ const class9QuizData = [
     formData.append("data", JSON.stringify({name:name, class:className, symbol:symbol, score:score, total:total}));
     fetch(url, { method: "POST", body: formData })
       .then(() => alert("✅ Have been Save"))
-      .catch(() => alert("⚠️ सेभ हुँदा समस्या, तर स्कोर: "+score+"/"+total));
+      .catch(() => alert("⚠️ सेभ हुँदा समस्या देखियो , तर तपाइँले प्राप्त गरेको स्कोर: "+score+"/"+total));
   }
 
+
+
+	
   function resetToClassSelection() {
     location.reload(); 
   }
