@@ -7,10 +7,9 @@
   <link rel="icon" type="image/png" href="Brp Digital Institute logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    
-    body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; max-height: 100vh; margin: 0; font-size: 18px; background-color: #111; color: white; overflow-x: hidden; overflow-y: auto; }
-    #class-select-section, #password-section, #quiz-section { margin-top: 20px; max-width: 100%; text-align: center; }
-    #quiz-section { display: none; }
+    body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-size: 18px; background-color: #111; color: white; overflow-x: hidden; overflow-y: auto; }
+    #class-select-section, #password-section, #quiz-section, #quiz-type-choice, #google-form-container { margin-top: 20px; max-width: 100%; text-align: center; }
+    #quiz-section, #quiz-type-choice, #google-form-container { display: none; }
     .question-numbers { margin-top: 20px; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; background-color: #111; padding: 10px; z-index: 10; }
     .question-numbers button { margin: 5px; font-size: 30px; padding: 10px; background-color: blue; color: white; border: 1px solid #ccc; cursor: pointer; }
     .question-numbers button.selected { background-color: red; }
@@ -26,9 +25,15 @@
     .open-quiz-button { background: linear-gradient(45deg, #6a11cb, #2575fc); color: white; text-decoration: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; }
     .open-quiz-button:hover { transform: scale(1.05); }
     #submit-quiz-btn { background: #ff5722; font-size: 28px; padding: 12px 30px; margin: 30px auto; display: block; border: none; border-radius: 40px; cursor: pointer; color: white; font-weight: bold; }
+    .choice-buttons { display: flex; justify-content: center; gap: 30px; margin: 30px; flex-wrap: wrap; }
+    .quiz-type-btn { background: linear-gradient(45deg, #6a11cb, #2575fc); color: white; font-size: 24px; padding: 15px 30px; border: none; border-radius: 50px; cursor: pointer; transition: 0.3s; }
+    .quiz-type-btn:hover { transform: scale(1.05); background: linear-gradient(45deg, #ff416c, #ff4b2b); }
+    iframe { width: 100%; height: 800px; border: 2px solid #fff; border-radius: 12px; margin-top: 20px; }
+    .back-btn { background: orange; color: black; padding: 10px 20px; border-radius: 30px; margin: 20px; border: none; cursor: pointer; font-size: 18px; }
   </style>
 </head>
 <body>
+
 
 
 
@@ -44,39 +49,65 @@
   </select>
 
 
+
   <button onclick="showPasswordSection()" style="color: white; background-color: #ff0066; border: 2px solid white; border-radius: 5px; padding: 10px 20px;">Next</button>
-  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></h3>  
-</div>
-
-
-
- <a href="quiz.html" class="open-quiz-button" target="_blank">"Start Timed Quiz Challenge" ✅</a>
-</div>
+  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></span></h3>  
 </div>
 
 
 
 
+
+
+<a href="quiz.html" class="open-quiz-button" target="_blank">"Start Timed Quiz Challenge" ✅</a>
 
 <div id="password-section" style="display:none;">
   <h2>Enter Password for Selected Class</h2>
   <input type="password" id="password-input" placeholder="Enter Password" style="font-size: 18px; padding: 10px" />
   <button onclick="validatePassword()" style="font-size: 18px; padding: 10px">Submit</button>
   <p id="error-message">Incorrect password, please try again.</p>
-  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></h3>
+  <h3><span style="color: yellow;">Designed By <span style="color:skyblue;"> Brpmailo </span></span></h3>
+</div>
+
+
+
+
+
+
+<div id="quiz-type-choice" style="display:none;">
+  <h2>SELECT YOUR QUIZ</h2>
+  <div class="choice-buttons">
+    <button class="quiz-type-btn" onclick="loadGoogleForm()">🌐Assessment Quiz</button>
+    <button class="quiz-type-btn" onclick="loadNormalQuiz()">📝Normal Quiz</button>
+  </div>
+
+
+
+  <button class="back-btn" onclick="resetToClassSelection()">⟳Re Select Class</button>
+</div>
+
+
+
+
+
+<div id="google-form-container" style="display:none;">
+  <h2 id="google-form-title"></h2>
+  <iframe id="google-iframe" src="about:blank" frameborder="0"></iframe>
+  <button class="back-btn" onclick="resetToClassSelection()">⟳Re Select Class</button>
 </div>
 
 
 
 
 <div id="student-info-form" style="display: none; background: #222; padding: 20px; border-radius: 10px; margin: 20px;">
-  <h3>📋Your Information</h3>
-  <input type="text" id="student-name" placeholder="Full Name (Optional)" style="width: 80%; padding: 10px; margin: 8px;">
-  <input type="text" id="student-symbol" placeholder="Symbol Number (Optional)" style="width: 80%; padding: 10px; margin: 8px;">
+  <h3>📋 Your Information</h3>
+  <input type="text" id="student-name" placeholder="Full Name (Optional)" style="width: 80%; padding: 10px; margin: 8px;"><br>
+  <input type="text" id="student-symbol" placeholder="Symbol Number (Optional)" style="width: 80%; padding: 10px; margin: 8px;"><br>
   <p style="font-size: 16px;">Class: <strong id="display-class"></strong></p>
   <button id="confirm-save-btn" style="background: #4caf50; padding: 10px 20px;">✅ Save My Score</button>
   <button id="skip-save-btn" style="background: #777; padding: 10px 20px;">⏩ Skip & Continue</button>
 </div>
+
 
 
 
@@ -94,8 +125,24 @@
 
 
 
-  <script>
-    const classPasswords = { 5: "class5pass", 6: "class6pass", 7: "class7pass", 8: "class8pass",  9: "class9pass" };
+
+<script> 
+  const classPasswords = { 5: "class5pass", 6: "class6pass", 7: "class7pass", 8: "class8pass", 9: "class9pass" };
+
+
+
+
+  const googleFormLinks = {
+    7: "https://docs.google.com/forms/d/e/YOUR_CLASS_7_LINK_HERE/viewform?embedded=true",   
+    8: "https://docs.google.com/forms/d/e/1FAIpQLScsZwSt5QWWub7czQmUNeDyFTVLPXWKfFab2RiOlkuJUGoIpg/viewform?embedded=true",
+    9: "https://docs.google.com/forms/d/e/YOUR_CLASS_9_LINK_HERE/viewform?embedded=true"    
+  };
+
+    
+
+
+
+
     const class5QuizData = [
   { question: "Q1: What does CPU stand for?", choices: ["Central Processing Unit", "Computer Personal Unit", "Central Performance Unit", "Control Panel Unit"], answer: "Central Processing Unit" },
   { question: "Q2: नेपालको राष्ट्रिय पक्षी कुन हो?", choices: ["धनचरी", "डाँफे", "मुनाल", "काग"], answer: "डाँफे" },
@@ -267,12 +314,12 @@ const class8QuizData = [
 	{ question: "1 : नेपालको संविधानले कति ओटा मौलिक हकको व्यवस्था गरेको छ ?", choices: ["२२", "३३ ", "२१", "३१"], answer: "३१" },
 	{ question: "2 : नेपालको जम्मा क्षेत्रफल कति रहेको छ?", choices: ["१,४७,१८१ वर्ग कि.मि.", "१,४७,५८१ वर्ग कि.मि.", "१,४७,५१६ वर्ग कि.मि.", "१,४६,१८१ वर्ग कि.मि."], answer: "१,४७,१८१ वर्ग कि.मि." },
 	{ question: "3 : नेपालको कुन् प्रदेश जनसंख्याका हिसाबले ठुलो रहेको छ ?", choices: ["कोशी", "मधेस ", "बागमती", "लुम्बिनी"], answer: "बागमती" },
-	{ question: "4 : नेपालको संविधानमा शिक्षा सम्बन्धित मौलिक हक कति धारमा व्यवस्था गरिएको छ ?", choices: ["३० ", "३१ ", "३२ ", "३३ "], answer: "३१" },
+	{ question: "4 : नेपालको संविधानमा शिक्षा सम्बन्धित मौलिक हक कति धारमा व्यवस्था गरिएको छ ?", choices: ["३०", "३१", "३२", "३३"], answer: "३१" },
 	{ question: "5 : कोशी प्रदेशमा कति जिल्लाहरु रहेका छन् ?", choices: ["१२", "१३ ", "१४ ", "१५"], answer: "१४" },
 	{ question: "6 : संविधानको धारा कतिदेखि धारा कतिसम्म मौलिक हकहरु रहेका छन् ?", choices: ["धारा १५ देखि धारा ४८ सम्म ", "धारा १६ देखि धारा ४८ सम्म  ", "धारा १५ देखि धारा ४६ सम्म ", "धारा १६ देखि धारा ४६ सम्म"], answer: "धारा १६ देखि धारा ४६ सम्म" },
 	{ question: "7 : नेपालमा जम्मा स्थानीय तहहरुको संख्या कति रहेको छ ?", choices: ["७५३ ", "७६३ ", "५५३", "७५४"], answer: "७५३" },
-	{ question: "8 : जनसंख्या परिवर्तनका प्रमुख कारक के के हुन् ?", choices: ["जन्म, मृत्यु, बिबाह, बसाईंसराई", "जन्म, मृत्यु ", "जन्म, मृत्यु, बसाईंसराई", "जन्म, बिबाह, बसाईंसराई"], answer: "जन्म, मृत्यु, बिबाह, बसाईंसराई" },
-	{ question: "9 : राज्यको आधारभूत तत्व के हैन ?", choices: ["भूगोल ", "जनसंख्या ", "सरकार", "संविधान"], answer: "संविधान" },
+	{ question: "8 : जनसंख्या परिवर्तनका निर्धारक तत्व के होइन ?", choices: ["जन्म", "मृत्यु", "बसाईंसराई", "बिबाह"], answer: "बिबाह" },
+	{ question: "9 : राज्यको आधारभूत तत्व के हैन ?", choices: ["भूगोल ", "जनसंख्या ", "प्रधानमन्त्री", "संविधान"], answer: "प्रधानमन्त्री" },
 	{ question: "10 : समाजमा मूल्य मान्यता सिक्ने सिकाउने प्रक्रिया...........हो ।", choices: ["सिकाई", "सामाजिकीकरण", "सिक्ने प्रक्रिया", "समाज"], answer: "सामाजिकीकरण" },
 	{ question: "11 :  सोलुखुम्बु जिल्लामा ८००० मि. अग्ला हिमालहरु कति ओटा छन् ?", choices: ["१", "२", "३", "४"], answer: "३" },
 	{ question: "12 :  नेपालमा ८००० मि. अग्ला हिमालहरु कति ओटा छन् ?", choices: ["५", "६", "७", "८"], answer: "८" },
@@ -708,51 +755,13 @@ const class9QuizData = [
 
 
 
-	
-  ];
+
+ ];
   let currentClass = "";
   let currentQuizData = [];
   let userSelections = [];
 
-
-
-
-
-
- // Google Apps Script URL - तपाईंले पाएको नयाँ URL राख्नुहोस्
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDWHoY8ooU9pU_SqRpc6VJYcMr6O1_Zya6iHikR57TzhSuOLAoUzmFUOKkuZG-HYj7Xw/exec";
-
-
-
-async function saveScoreToSheets(studentName, className, symbolNo, score, totalQuestions) {
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        name: studentName, 
-        class: className, 
-        symbol: symbolNo, 
-        score: score, 
-        total: totalQuestions 
-      })
-    });
-    const result = await response.json();
-    if (result.status === "ok") {
-      alert(`✅ Success! ${studentName || "Anonymous"}, your score ${score}/${totalQuestions} saved.`);
-    } else {
-      alert("Saved but response unclear.");
-    }
-  } catch (err) {
-    console.error(err);
-    alert(`⚠️ Could not connect to Google Sheets, but your score is ${score}/${totalQuestions}. Please check script URL.`);
-  }
-}
-
-
-
-
+ 
 
 
 
@@ -766,29 +775,57 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
     document.getElementById("error-message").style.display = "none";
   }
 
-
-
-
-
   function validatePassword() {
     const enteredPassword = document.getElementById("password-input").value;
-    if (enteredPassword === classPasswords[currentClass]) {
-      document.getElementById("password-section").style.display = "none";
-      if (currentClass === "5") currentQuizData = class5QuizData;
-      else if (currentClass === "6") currentQuizData = class6QuizData;
-      else if (currentClass === "7") currentQuizData = class7QuizData;
-      else if (currentClass === "8") currentQuizData = class8QuizData;
-      else if (currentClass === "9") currentQuizData = class9QuizData;
-      
-      userSelections = new Array(currentQuizData.length).fill(null);
-      document.getElementById("quiz-title").textContent = "Quiz Competition - Class " + currentClass;
-      document.getElementById("quiz-section").style.display = "block";
-      renderQuiz();
-    } else {
+    if (enteredPassword !== classPasswords[currentClass]) {
       document.getElementById("error-message").style.display = "block";
+      return;
+    }
+    document.getElementById("password-section").style.display = "none";
+    
+   
+    if (currentClass === "5" || currentClass === "6") {
+      loadNormalQuiz();
+    } 
+    
+    else if (currentClass === "7" || currentClass === "8" || currentClass === "9") {
+      document.getElementById("quiz-type-choice").style.display = "block";
+    } else {
+      alert("Invalid class");
     }
   }
 
+  function loadGoogleForm() {
+    const link = googleFormLinks[currentClass];
+    if (!link || link.includes("YOUR_CLASS")) {
+      alert("यस कक्षाको Google Form लिंक हाल्न बाँकी छ। कृपया प्राविधिकलाई सम्पर्क गर्नुहोस्।");
+      return;
+    }
+    document.getElementById("quiz-type-choice").style.display = "none";
+    document.getElementById("quiz-section").style.display = "none";
+    document.getElementById("student-info-form").style.display = "none";
+    const container = document.getElementById("google-form-container");
+    container.style.display = "block";
+    document.getElementById("google-form-title").innerHTML = `📌 कक्षा ${currentClass} को Assessment Quiz (Google Form)`;
+    document.getElementById("google-iframe").src = link;
+  }
+
+  function loadNormalQuiz() {
+    document.getElementById("quiz-type-choice").style.display = "none";
+    document.getElementById("google-form-container").style.display = "none";
+
+    if (currentClass === "5") currentQuizData = class5QuizData;
+    else if (currentClass === "6") currentQuizData = class6QuizData;
+    else if (currentClass === "7") currentQuizData = class7QuizData;
+    else if (currentClass === "8") currentQuizData = class8QuizData;
+    else if (currentClass === "9") currentQuizData = class9QuizData;
+    else return;
+
+    userSelections = new Array(currentQuizData.length).fill(null);
+    document.getElementById("quiz-title").textContent = "Quiz Competition - Class " + currentClass;
+    document.getElementById("quiz-section").style.display = "block";
+    renderQuiz();
+  }
 
 
 
@@ -798,39 +835,29 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
     const questionsContainer = document.getElementById("questions-container");
     questionNumbersContainer.innerHTML = "";
     questionsContainer.innerHTML = "";
+    const clickedQuestions = new Set();
 
-    const clickedQuestions = new Set();   // Store which questions have been checked
-
-    // 1. Create question number buttons
     currentQuizData.forEach((_, idx) => {
       const btn = document.createElement("button");
       btn.textContent = idx + 1;
       btn.onclick = () => {
-        // If this question has NOT been checked yet, hide the number list
-        if (!clickedQuestions.has(idx)) {
-          questionNumbersContainer.style.display = "none";
-        }
-        // Activate selected question
+        if (!clickedQuestions.has(idx)) questionNumbersContainer.style.display = "none";
         document.querySelectorAll(".question-section").forEach(s => s.classList.remove("active"));
         document.getElementById(`question-${idx}`).classList.add("active");
       };
       questionNumbersContainer.appendChild(btn);
     });
 
-    // 2. Create each question's UI
     currentQuizData.forEach((data, idx) => {
       const qDiv = document.createElement("div");
       qDiv.classList.add("question-section");
       qDiv.id = `question-${idx}`;
       qDiv.innerHTML = `<h2>${data.question}</h2>`;
-
-      // Choice buttons
       data.choices.forEach(choice => {
         const choiceBtn = document.createElement("button");
         choiceBtn.textContent = choice;
         choiceBtn.classList.add("choice");
         if (userSelections[idx] === choice) choiceBtn.classList.add("selected");
-
         choiceBtn.onclick = () => {
           qDiv.querySelectorAll(".choice").forEach(btn => btn.classList.remove("selected"));
           choiceBtn.classList.add("selected");
@@ -838,25 +865,17 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
         };
         qDiv.appendChild(choiceBtn);
       });
-
-      // Check Answer button
       const checkBtn = document.createElement("button");
       checkBtn.textContent = "Check Right Answer";
       checkBtn.style.margin = "10px";
       checkBtn.style.padding = "10px";
       checkBtn.onclick = () => {
         const selected = userSelections[idx];
-        if (!selected) {
-          alert("Please select an answer first!");
-          return;
-        }
-        // Mark this question as checked (make number button red)
+        if (!selected) { alert("Please select an answer first!"); return; }
         clickedQuestions.add(idx);
         document.querySelectorAll(".question-numbers button").forEach((btn, i) => {
           if (clickedQuestions.has(i)) btn.classList.add("selected");
         });
-
-        // Disable all choices and show correct/incorrect
         qDiv.querySelectorAll(".choice").forEach(btn => {
           btn.disabled = true;
           if (btn.textContent === data.answer) btn.classList.add("correct");
@@ -870,20 +889,14 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
           qDiv.appendChild(congrats);
         }
         checkBtn.disabled = true;
-        // Hide number list, then show after 3 seconds
         questionNumbersContainer.style.display = "none";
-        setTimeout(() => {
-          questionNumbersContainer.style.display = "flex";
-        }, 3000);
+        setTimeout(() => { questionNumbersContainer.style.display = "flex"; }, 3000);
       };
       qDiv.appendChild(checkBtn);
       questionsContainer.appendChild(qDiv);
     });
 
-    // Initially show number list
     questionNumbersContainer.style.display = "flex";
-
-    // 3. Submit button handler (show student info form)
     const submitBtn = document.getElementById("submit-quiz-btn");
     submitBtn.style.display = "block";
     const studentForm = document.getElementById("student-info-form");
@@ -893,12 +906,10 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
       for (let i = 0; i < currentQuizData.length; i++) {
         if (userSelections[i] === currentQuizData[i].answer) score++;
       }
-      // Show the form, fill class name
       document.getElementById("display-class").innerText = currentClass;
       studentForm.style.display = "block";
       submitBtn.style.display = "none";
 
-      // Handle save and skip buttons (clone to avoid multiple listeners)
       const confirmBtn = document.getElementById("confirm-save-btn");
       const skipBtn = document.getElementById("skip-save-btn");
       const newConfirm = confirmBtn.cloneNode(true);
@@ -917,6 +928,19 @@ async function saveScoreToSheets(studentName, className, symbolNo, score, totalQ
         studentForm.style.display = "none";
       };
     };
+  }
+
+  function saveScoreToSheets(name, className, symbol, score, total) {
+    var url = "https://script.google.com/macros/s/AKfycbzp_svz0SVPQ27m4NbklI6MAyMnO_KyOtqXnk0vmYF2NCNu5TxZf3UbTZDRGSLicpq4mw/exec";
+    var formData = new FormData();
+    formData.append("data", JSON.stringify({name:name, class:className, symbol:symbol, score:score, total:total}));
+    fetch(url, { method: "POST", body: formData })
+      .then(() => alert("✅ सेभ भयो!"))
+      .catch(() => alert("⚠️ सेभ हुँदा समस्या, तर स्कोर: "+score+"/"+total));
+  }
+
+  function resetToClassSelection() {
+    location.reload(); 
   }
 </script>
 </body>
