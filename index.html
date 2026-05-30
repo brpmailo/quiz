@@ -930,14 +930,31 @@ const class9QuizData = [
     };
   }
 
-  function saveScoreToSheets(name, className, symbol, score, total) {
-    var url = "https://script.google.com/macros/s/AKfycbzp_svz0SVPQ27m4NbklI6MAyMnO_KyOtqXnk0vmYF2NCNu5TxZf3UbTZDRGSLicpq4mw/exec";
-    var formData = new FormData();
-    formData.append("data", JSON.stringify({name:name, class:className, symbol:symbol, score:score, total:total}));
-    fetch(url, { method: "POST", body: formData })
-      .then(() => alert("✅ Have been Save"))
-      .catch(() => alert("⚠️ सेभ हुँदा समस्या देखियो , तर तपाइँले प्राप्त गरेको स्कोर: "+score+"/"+total));
-  }
+
+
+
+
+ function saveScoreToSheets(name, className, symbol, score, total) {
+  var url = "https://script.google.com/macros/s/AKfycbwnh481rNYTd1iLQ_cpbE9lRPd_LMmdez8KAyJ8Ft1UBA484NqOmqeuPLyrJT5PWf19RQ/exec"; // 👈 यहाँ आफ्नो URL राख्नुहोस्
+  var formData = new FormData();
+  formData.append("data", JSON.stringify({
+    name: name,
+    class: className,
+    symbol: symbol,
+    score: score,
+    total: total
+  }));
+  
+  fetch(url, { method: "POST", body: formData })
+    .then(response => response.json())
+    .then(data => {
+      if (data.result === 'success') alert("✅Your score has been saved in Brp Digital Institute's database.");
+      else alert("⚠️ सेभ हुँदा समस्या: " + (data.error || "Unknown error"));
+    })
+    .catch(err => alert("⚠️ Network error, तर तपाईंले प्राप्त गरेको स्कोर: " + score + "/" + total));
+}
+
+
 
 
 
